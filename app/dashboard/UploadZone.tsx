@@ -3,14 +3,27 @@
 import Image from "next/image";
 import { Button } from "../components/ui/Button";
 import { useState } from "react";
- 
-
 
 export function UploadZone() {
-
   const [fileName, setFileName] = useState("");
-
   const [file, setFile] = useState<File | null>(null);
+
+  async function handleUpload() {
+    if (!file) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/upload-cv", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    console.log(data);
+  }
 
   return (
     <div className="flex h-[260px] w-[440px] flex-col items-center justify-center gap-[10px] overflow-visible rounded-3xl border-2 border-dashed border-primary bg-white px-8 py-5 text-center">
@@ -29,13 +42,8 @@ export function UploadZone() {
       </h3>
 
       <div>
-        <p className="text-sm text-gray-500">
-          Formatos aceitos: PDF, DOCX
-        </p>
-
-        <p className="text-sm text-gray-500">
-          Tamanho máximo: 5MB
-        </p>
+        <p className="text-sm text-gray-500">Formatos aceitos: PDF, DOCX</p>
+        <p className="text-sm text-gray-500">Tamanho máximo: 5MB</p>
       </div>
 
       <input
@@ -46,9 +54,10 @@ export function UploadZone() {
           setFileName(chosen?.name ?? "");
         }}
       />
+
       {fileName && <p className="text-sm text-green-600">Selecionado: {fileName}</p>}
 
-      <Button variant="primary" size="sm">
+      <Button variant="primary" size="sm" onClick={handleUpload}>
         Enviar Currículo
       </Button>
     </div>
