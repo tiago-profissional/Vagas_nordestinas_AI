@@ -1,53 +1,40 @@
-type ExtractedInfoProps = {
-  data: {
-    name: string;
-    email: string;
-    phone: string;
-    location: string;
-    totalExperience: string;
-  };
-};
+import { useCVStore } from "../store/useCVStore";
+import Card from "../components/ui/Card";
 
-export function ExtractedInfo({ data }: ExtractedInfoProps) {
+export function ExtractedInfo() {
+  const { cvData } = useCVStore();
+
   return (
-    <section className="w-[320px] rounded-3xl border border-gray-200 bg-white p-5 shadow-sm">
-      
-      <div className="mb-5 flex items-center gap-3">
-        
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-100 text-lg">
-          👤
+    <Card variant="dashboard" className="overflow-hidden">
+      <div className="grid h-full grid-rows-[auto_1fr]" style={{ marginLeft: "10px" }}>
+        {/* Header */}
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-yellow-100 text-lg text-yellow-600">
+            👤
+          </div>
+          <h2 className="text-[18px] font-bold text-gray-900">Informações extraídas</h2>
         </div>
 
-        <h2 className="text-[18px] font-bold text-gray-900">
-          Informações extraídas
-        </h2>
-
+        {/* Content */}
+        <div className="grid content-center gap-5">
+          <InfoRow label="Nome" value={cvData?.name} />
+          <InfoRow label="Email" value={cvData?.email} />
+          <InfoRow label="Telefone" value={cvData?.phone} />
+          <InfoRow label="Localização" value={cvData?.location} />
+          <InfoRow label="Experiência Total" value={cvData?.totalExperience} />
+        </div>
       </div>
-
-      <div className="space-y-4">
-        <InfoRow label="Nome" value={data.name} />
-        <InfoRow label="Email" value={data.email} />
-        <InfoRow label="Telefone" value={data.phone} />
-        <InfoRow label="Localização" value={data.location} />
-        <InfoRow label="Experiência Total" value={data.totalExperience} />
-      </div>
-
-    </section>
+    </Card>
   );
 }
 
-function InfoRow({ label, value }: { label: string; value: string }) {
+function InfoRow({ label, value }: { label: string; value?: string }) {
   return (
-    <div className="grid grid-cols-[120px_1fr] items-center">
-      
-      <span className="text-[14px] font-semibold text-gray-900">
-        {label}
+    <div className="grid grid-cols-[140px_1fr] items-center gap-5">
+      <span className="text-[15px] font-bold text-gray-900">{label}</span>
+      <span className="truncate text-[15px] font-medium text-gray-600">
+        {value || "Não informado"}
       </span>
-
-      <span className="text-[14px] text-gray-600">
-        {value}
-      </span>
-
     </div>
   );
 }

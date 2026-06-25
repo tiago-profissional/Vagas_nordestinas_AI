@@ -1,83 +1,57 @@
+import { useCVStore } from "../store/useCVStore";
+import Card from "../components/ui/Card";
+
 export function AnalysisTips() {
+  const { hasCV, cvData } = useCVStore();
+
   return (
-    <section className="w-[500px] rounded-3xl border border-gray-200 bg-white p-5 shadow-sm">
-      
-      {/* HEADER */}
-      <div className="mb-4 flex items-center gap-3">
-        
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-100 text-sm">
-          ✨
+    <Card variant="dashboard" className="overflow-hidden">
+      <div className="grid h-full w-full grid-rows-[auto_1fr_auto]">
+        {/* HEADER */}
+        <div className="mb-7 flex items-center gap-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-100 text-lg">
+            ✨
+          </div>
+          <h2 className="text-[22px] font-bold text-gray-900">Análise da IA</h2>
         </div>
 
-        <h2 className="text-[18px] font-bold text-gray-900">
-          Análise da IA
-        </h2>
+        {/* MIDDLE — empty state or list */}
+        {!hasCV || !cvData ? (
+          <div className="flex items-center">
+            <p className="text-[20px] text-gray-400">
+              Envie seu currículo para receber uma análise completa com insights e recomendações personalizadas.
+            </p>
+          </div>
+        ) : (
+          <div className="grid content-start gap-y-[14px]">
+            <h3 className="mb-3 text-[17px] font-semibold text-gray-800">
+              Seu currículo está bem estruturado, mas pode melhorar:
+            </h3>
+            {cvData.aiAnalysis.map((tip) => (
+              <div key={tip.text} className="grid grid-cols-[28px_1fr] items-center gap-x-5">
+                <span
+                  className={`
+                    flex h-7 w-7 items-center justify-center
+                    rounded-full text-[14px] font-bold text-white
+                    ${tip.status === "success" ? "bg-green-500" : "bg-yellow-400"}
+                  `}
+                >
+                  {tip.status === "success" ? "✓" : "!"}
+                </span>
+                <p className="text-[16px] text-gray-700">{tip.text}</p>
+              </div>
+            ))}
+          </div>
+        )}
 
+        {/* FOOTER */}
+        <footer className="flex items-center justify-between pt-10">
+          <button className="text-[16px] font-semibold text-yellow-600">
+            Ver dicas detalhadas
+          </button>
+          <span className="text-2xl text-yellow-500">→</span>
+        </footer>
       </div>
-
-      {/* TITLE */}
-      <h3 className="mb-4 text-[15px] font-semibold text-gray-800">
-        Seu currículo está bem estruturado, mas pode melhorar:
-      </h3>
-
-      {/* LIST */}
-      <div className="space-y-3">
-
-        <div className="flex items-center gap-3">
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-[11px] text-white">
-            ✓
-          </span>
-
-          <p className="text-[14px] text-gray-700">
-            Destaque mais resultados com números e métricas
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-yellow-400 text-[11px] text-white">
-            !
-          </span>
-
-          <p className="text-[14px] text-gray-700">
-            Adicione mais palavras-chave técnicas relevantes
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-yellow-400 text-[11px] text-white">
-            !
-          </span>
-
-          <p className="text-[14px] text-gray-700">
-            Organize melhor suas experiências e projetos
-          </p>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500 text-[11px] text-white">
-            ✓
-          </span>
-
-          <p className="text-[14px] text-gray-700">
-            Inclua uma seção de certificações e cursos
-          </p>
-        </div>
-
-      </div>
-
-      {/* FOOTER */}
-      <div className="mt-5 flex items-center justify-between">
-        
-        <button className="text-[14px] font-semibold text-yellow-600">
-          Ver dicas detalhadas
-        </button>
-
-        <span className="text-lg text-yellow-500">
-          →
-        </span>
-
-      </div>
-
-    </section>
+    </Card>
   );
 }

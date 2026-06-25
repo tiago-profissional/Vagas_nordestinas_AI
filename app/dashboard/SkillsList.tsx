@@ -1,63 +1,58 @@
-// src/components/dashboard/SkillsList.tsx
+import { useCVStore } from "../store/useCVStore";
+import Card from "../components/ui/Card";
 
-type SkillsListProps = {
-  skills: string[];
-  totalSkills: number;
-};
+export function SkillsList() {
+  const { hasCV, cvData } = useCVStore();
 
-export function SkillsList({
-  skills,
-  totalSkills,
-}: SkillsListProps) {
+  const skills = cvData?.skills ?? [];
+  const totalSkills = skills.length;
+
   return (
-    <section className="w-[420px] rounded-3xl border border-gray-200 bg-white p-5 shadow-sm">
-      
-      {/* HEADER */}
-      <div className="mb-5 flex items-center gap-3">
-        
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-100 text-lg">
-          {"</>"}
+    <Card variant="dashboard" className="overflow-hidden rounded-[22px] border border-gray-200 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+      <div className="flex h-full w-full flex-col p-5">
+        {/* Header */}
+        <div className="mb-8 flex items-center justify-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-100 text-sm font-bold text-yellow-600">
+            {"</>"}
+          </div>
+          <h2 className="text-[18px] font-bold text-gray-900">Skills detectadas</h2>
         </div>
 
-        <h2 className="text-[18px] font-bold text-gray-900">
-          Skills detectadas
-        </h2>
+        {/* Middle */}
+        <div className="flex flex-1 items-center justify-center">
+          {!hasCV || !cvData ? (
+            <p className="text-center text-[15px] text-gray-400">
+              Envie seu currículo para ver as skills detectadas.
+            </p>
+          ) : (
+            <div className="grid max-w-[330px] grid-cols-3 justify-items-center gap-x-3 gap-y-4">
+              {skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="
+                    flex h-7 w-[95px] items-center justify-center
+                    rounded-full bg-yellow-50 px-2 text-center
+                    text-[12px] font-semibold leading-none
+                    text-yellow-700 whitespace-nowrap
+                  "
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
 
+        {/* Footer */}
+        <div className="mt-[-10px] flex w-full justify-center px-[22px]">
+          <footer className="flex w-full max-w-[300px] items-center justify-between">
+            <button className="text-[15px] font-semibold text-yellow-600">
+              Ver todas as skills ({totalSkills})
+            </button>
+            <span className="text-lg text-yellow-500">→</span>
+          </footer>
+        </div>
       </div>
-
-      {/* SKILLS */}
-      <div className="flex flex-wrap gap-3">
-        {skills.map((skill) => (
-          <span
-            key={skill}
-            className="
-              rounded-full
-              bg-yellow-50
-              px-4
-              py-2
-              text-[14px]
-              font-semibold
-              text-yellow-700
-            "
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
-
-      {/* FOOTER */}
-      <div className="mt-8 flex items-center justify-between">
-        
-        <button className="text-[15px] font-semibold text-yellow-600">
-          Ver todas as skills ({totalSkills})
-        </button>
-
-        <span className="text-xl text-yellow-500">
-          →
-        </span>
-
-      </div>
-
-    </section>
+    </Card>
   );
 }

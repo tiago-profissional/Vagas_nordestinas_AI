@@ -1,25 +1,72 @@
 import { ReactNode } from "react";
 
+type CardVariant =
+  | "default"
+  | "middle"
+  | "wide"
+  | "banner"
+  | "status"
+  | "dashboard";
+
 type CardProps = {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   children?: ReactNode;
+  className?: string;
+  variant?: CardVariant;
 };
 
-export default function Card({ title, description, children }: CardProps) {
+const variantClasses: Record<CardVariant, string> = {
+  default: "min-h-[240px]",
+  middle: "min-h-[285px]",
+  wide: "min-h-[300px]",
+  banner: "min-h-[110px]",
+  status: "min-h-[300px]",
+  dashboard: "min-h-[250px]",
+};
+
+export default function Card({
+  title,
+  description,
+  children,
+  className = "",
+  variant = "default",
+}: CardProps) {
   return (
-    <div className="w-[300px] h-[280px] bg-[#E8E7E5] rounded-3xl p-6 border border-neutral-200 shadow-sm">
-      <h2 className="text-lg font-bold">{title}</h2>
-
-      <p className="mt-2 text-gray-600">
-        {description}
-      </p>
-
-      {children && (
-        <div className="mt-4">
-          {children}
-        </div>
+    <div
+      className={`
+        flex
+        h-full
+        w-full
+        min-w-0
+        flex-col
+        rounded-3xl
+        border
+        border-neutral-200
+        bg-white
+        p-6
+        shadow-sm
+        transition-all
+        duration-300
+        sm:p-7
+        lg:p-8
+        ${variantClasses[variant]}
+        ${className}
+      `}
+    >
+      {title && (
+        <h2 className="break-words text-lg font-bold text-gray-900 sm:text-xl">
+          {title}
+        </h2>
       )}
+
+      {description && (
+        <p className="mt-2 break-words text-sm text-gray-600 sm:text-base">
+          {description}
+        </p>
+      )}
+
+      {children}
     </div>
   );
 }

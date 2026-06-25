@@ -1,7 +1,17 @@
+"use client"
+
 import Image from "next/image";
 import { Button } from "../components/ui/Button";
+import { useState } from "react";
+ 
+
 
 export function UploadZone() {
+
+  const [fileName, setFileName] = useState("");
+
+  const [file, setFile] = useState<File | null>(null);
+
   return (
     <div className="flex h-[260px] w-[440px] flex-col items-center justify-center gap-[10px] overflow-visible rounded-3xl border-2 border-dashed border-primary bg-white px-8 py-5 text-center">
       <Image
@@ -27,6 +37,16 @@ export function UploadZone() {
           Tamanho máximo: 5MB
         </p>
       </div>
+
+      <input
+        type="file"
+        onChange={(e) => {
+          const chosen = e.target.files?.[0] ?? null;
+          setFile(chosen);
+          setFileName(chosen?.name ?? "");
+        }}
+      />
+      {fileName && <p className="text-sm text-green-600">Selecionado: {fileName}</p>}
 
       <Button variant="primary" size="sm">
         Enviar Currículo

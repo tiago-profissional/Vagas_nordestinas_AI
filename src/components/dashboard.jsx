@@ -5,6 +5,21 @@ import Header from "./Headers";
 import { getJobsByUser, deleteJob } from "../services/jobsApi";
 import "../styles/dashboardJobs.css";
 
+function getStoredUser() {
+  try {
+    const storedUser = localStorage.getItem("user");
+
+    if (!storedUser) {
+      return null;
+    }
+
+    return JSON.parse(storedUser);
+  } catch (error) {
+    localStorage.removeItem("user");
+    return null;
+  }
+}
+
 function DashboardJobs() {
   const navigate = useNavigate();
 
@@ -12,7 +27,7 @@ function DashboardJobs() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const user = getStoredUser();
 
   useEffect(() => {
     if (!user) {
@@ -45,7 +60,10 @@ function DashboardJobs() {
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Delete this job?");
-    if (!confirmDelete) return;
+
+    if (!confirmDelete) {
+      return;
+    }
 
     const loadingToast = toast.loading("Deletando vaga...");
 
@@ -53,7 +71,8 @@ function DashboardJobs() {
       const data = await deleteJob(id);
 
       if (data.success || data.ok) {
-        setJobs((prev) => prev.filter((job) => job.id !== id));
+        setJobs((prevJobs) => prevJobs.filter((job) => job.id !== id));
+
         toast.dismiss(loadingToast);
         toast.success("Vaga deletada com sucesso!");
       } else {
@@ -75,9 +94,9 @@ function DashboardJobs() {
   const stats = useMemo(
     () => ({
       total: jobs.length,
-      active: jobs.filter((j) => j.status === "Ativa").length,
-      published: jobs.filter((j) => j.status === "Publicada").length,
-      draft: jobs.filter((j) => j.status === "Rascunho").length,
+      active: jobs.filter((job) => job.status === "Ativa").length,
+      published: jobs.filter((job) => job.status === "Publicada").length,
+      draft: jobs.filter((job) => job.status === "Rascunho").length,
     }),
     [jobs]
   );
@@ -89,7 +108,9 @@ function DashboardJobs() {
       <div className="vn-dashboard-jobs">
         <div className="vn-dashboard-jobs__layout">
           <aside className="vn-dashboard-jobs__sidebar">
-            <h2 className="vn-dashboard-jobs__sidebar-title">Dashboard</h2>
+            <h2 className="vn-dashboard-jobs__sidebar-title">
+              Dashboard
+            </h2>
 
             <div className="vn-dashboard-jobs__sidebar-menu">
               <button className="vn-dashboard-jobs__sidebar-item active">
@@ -132,27 +153,37 @@ function DashboardJobs() {
                 <span className="vn-dashboard-jobs__stat-label">
                   Total de Vagas
                 </span>
+
                 <h3 className="vn-dashboard-jobs__stat-number">
                   {stats.total}
                 </h3>
               </div>
 
               <div className="vn-dashboard-jobs__stat-card">
-                <span className="vn-dashboard-jobs__stat-label">Ativas</span>
+                <span className="vn-dashboard-jobs__stat-label">
+                  Ativas
+                </span>
+
                 <h3 className="vn-dashboard-jobs__stat-number text-blue">
                   {stats.active}
                 </h3>
               </div>
 
               <div className="vn-dashboard-jobs__stat-card">
-                <span className="vn-dashboard-jobs__stat-label">Publicadas</span>
+                <span className="vn-dashboard-jobs__stat-label">
+                  Publicadas
+                </span>
+
                 <h3 className="vn-dashboard-jobs__stat-number text-blue">
                   {stats.published}
                 </h3>
               </div>
 
               <div className="vn-dashboard-jobs__stat-card">
-                <span className="vn-dashboard-jobs__stat-label">Rascunhos</span>
+                <span className="vn-dashboard-jobs__stat-label">
+                  Rascunhos
+                </span>
+
                 <h3 className="vn-dashboard-jobs__stat-number text-purple">
                   {stats.draft}
                 </h3>
@@ -162,7 +193,9 @@ function DashboardJobs() {
             {loading ? (
               <p>Loading...</p>
             ) : error ? (
-              <p className="vn-dashboard-jobs__error">{error}</p>
+              <p className="vn-dashboard-jobs__error">
+                {error}
+              </p>
             ) : (
               <section className="vn-dashboard-jobs__table-wrap">
                 <div className="vn-dashboard-jobs__table">
@@ -208,7 +241,10 @@ function DashboardJobs() {
                           </td>
 
                           <td className="vn-dashboard-jobs__actions">
-                            <Link to={`/job/${job.id}`} aria-label="View job">
+                            <Link
+                              to={`/job/${job.id}`}
+                              aria-label="View job"
+                            >
                               👁
                             </Link>
 
@@ -220,6 +256,7 @@ function DashboardJobs() {
                             </Link>
 
                             <button
+                              type="button"
                               onClick={() => handleDelete(job.id)}
                               aria-label="Delete job"
                             >

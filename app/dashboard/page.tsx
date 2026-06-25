@@ -1,5 +1,6 @@
-import { DashboardLayout } from "../components/layout/DashboardLayout";
+"use client"
 
+import { DashboardLayout } from "../components/layout/DashboardLayout";
 import ActionButtons from "./ActionButtons";
 import { UploadZone } from "./UploadZone";
 import { ResumeStatus } from "./ResumeStatus";
@@ -11,88 +12,53 @@ import { AnalysisTips } from "./AnalysisTips";
 import { NextSteps } from "./NextSteps";
 
 export default function DashboardPage() {
-  const mockExtractedData = {
-    name: "João Silva",
-    email: "joaosilva@email.com",
-    phone: "(11) 99999-9999",
-    location: "São Paulo, SP",
-    totalExperience: "2 anos",
-  };
-
-  const mockSkills = [
-    "WordPress",
-    "Elementor",
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "jQuery",
-    "PHP",
-    "MySQL",
-    "SEO",
-    "Git",
-    "Figma",
-    "Responsive Design",
-  ];
-
-  const mockExperiences = [
-    {
-      title: "Desenvolvedor Frontend",
-      company: "Agência Web Solutions",
-      period: "03/2023 – Atual",
-    },
-    {
-      title: "WordPress Freelancer",
-      company: "Autônomo",
-      period: "01/2022 – 02/2023",
-    },
-    {
-      title: "Estagiário Web Developer",
-      company: "Tech Company",
-      period: "06/2021 – 12/2021",
-    },
-  ];
-
   return (
     <DashboardLayout>
-      <main className="flex w-full justify-center p-6">
-        <div className="w-full max-w-[1180px]">
+      <div className="flex w-full justify-center overflow-x-hidden px-8">
+        <div className="w-[95%] max-w-[1350px]">
           <ActionButtons />
 
-          <section className="mt-6 grid grid-cols-12 gap-6">
-            <div className="col-span-12 lg:col-span-5">
-              <UploadZone />
+          <section className="mt-8 space-y-[10px]">
+            {/* Primeira linha */}
+            <div className="grid grid-cols-1 gap-8 xl:grid-cols-12">
+              <div className="min-h-[310px] xl:col-span-5 [&>*]:h-full">
+                <UploadZone />
+              </div>
+              <div className="min-h-[310px] xl:col-span-7 [&>*]:h-full">
+                <ResumeStatus />
+              </div>
             </div>
 
-            <div className="col-span-12 lg:col-span-7">
-              <ResumeStatus />
+            {/* Segunda linha */}
+            <div className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-2 xl:grid-cols-3">
+              <div className="[&>*]:h-full">
+                <ExtractedInfo />
+              </div>
+              <div className="[&>*]:h-full">
+                <SkillsList />
+              </div>
+              <div className="md:col-span-2 xl:col-span-1 [&>*]:h-full">
+                <ExperienceList />
+              </div>
             </div>
 
-            <div className="col-span-12 md:col-span-6 xl:col-span-4">
-              <ExtractedInfo data={mockExtractedData} />
+            {/* Terceira linha */}
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              <div>
+                <AnalysisTips />
+              </div>
+              <div>
+                <ScoreCard />
+              </div>
             </div>
 
-            <div className="col-span-12 md:col-span-6 xl:col-span-4">
-              <SkillsList skills={mockSkills} totalSkills={15} />
-            </div>
-
-            <div className="col-span-12 md:col-span-6 xl:col-span-4">
-              <ExperienceList experiences={mockExperiences} />
-            </div>
-
-            <div className="col-span-12 lg:col-span-6">
-              <AnalysisTips />
-            </div>
-
-            <div className="col-span-12 lg:col-span-6">
-              <ScoreCard score={72} />
-            </div>
-
-            <div className="col-span-12">
+            {/* Última linha */}
+            <div>
               <NextSteps />
             </div>
           </section>
         </div>
-      </main>
+      </div>
     </DashboardLayout>
   );
 }

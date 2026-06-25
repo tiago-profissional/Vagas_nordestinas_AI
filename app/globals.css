@@ -7,7 +7,6 @@
 :root {
   /* LAYOUT */
   --container-width: 1280px;
-  --container-height: 1024px;
 
   /* PRIMARY */
   --primary: #c9a227;
@@ -89,14 +88,22 @@
   box-sizing: border-box;
 }
 
-* {
-  margin: 0;
-  padding: 0;
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 /* =========================================================
    HTML / BODY
 ========================================================= */
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
 
 html {
   font-size: 16px;
@@ -123,18 +130,25 @@ body {
 }
 
 /* =========================================================
-   LAYOUT
+   APP ROOT
+========================================================= */
+
+#__next {
+  min-height: 100vh;
+}
+
+/* =========================================================
+   LAYOUT HELPERS
 ========================================================= */
 
 .layout-container {
-  width: var(--container-width);
-  min-height: var(--container-height);
+  width: 100%;
+  max-width: var(--container-width);
+  min-height: 100vh;
 
   margin: 0 auto;
 
   position: relative;
-
-  overflow: hidden;
 
   background: var(--bg-secondary);
 }

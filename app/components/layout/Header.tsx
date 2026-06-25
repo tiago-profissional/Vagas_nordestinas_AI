@@ -1,12 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import Avatar from "@/app/components/ui/Avatar";
 
 type HeaderProps = {
   userName?: string;
+  userPhoto?: string;
 };
 
-export default function Header({ userName = "Tiago" }: HeaderProps) {
+
+
+
+export default function Header({ userName = "Tiago", userPhoto }: HeaderProps) {
   return (
     <header className="fixed left-0 top-0 z-50 h-[80px] w-full border-b border-gray-200 bg-white shadow-sm">
       <div className="grid h-full grid-cols-12 items-center px-8">
@@ -48,7 +53,11 @@ export default function Header({ userName = "Tiago" }: HeaderProps) {
             Buscar
           </button>
 
-          <div className="h-12 w-12 rounded-full bg-gray-300" />
+          <Avatar nome={userName} foto={userPhoto} />
+            
+          
+          
+
 
           <span className="text-[18px] font-semibold text-gray-800">
             {userName}

@@ -16,7 +16,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-[80px] z-40 h-[calc(100vh-80px)] w-[320px] overflow-y-auto bg-[#F1F1EF] shadow-sm">
+    <nav className="h-full w-full overflow-y-auto bg-[#F1F1EF] shadow-sm">
       <div className="grid grid-cols-1 gap-3 px-5 pt-8">
         {menuItems.map((item) => {
           const isActive = pathname === item.href;
@@ -56,6 +56,6 @@ export function Sidebar() {
           );
         })}
       </div>
-    </aside>
+    </nav>
   );
 }
