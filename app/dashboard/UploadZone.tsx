@@ -3,26 +3,19 @@
 import Image from "next/image";
 import { Button } from "../components/ui/Button";
 import { useState } from "react";
+import { useCVStore } from "../store/useCVStore";
 
 export function UploadZone() {
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const uploadCV = useCVStore((state) => state.uploadCV);
 
   async function handleUpload() {
     if (!file) {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const res = await fetch("/api/upload-cv", {
-      method: "POST",
-      body: formData,
-    });
-
-    const data = await res.json();
-    console.log(data);
+    await uploadCV(file);
   }
 
   return (

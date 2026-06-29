@@ -10,8 +10,10 @@ import { ExperienceList } from "./ExperienceList";
 import { ScoreCard } from "./ScoreCard";
 import { AnalysisTips } from "./AnalysisTips";
 import { NextSteps } from "./NextSteps";
+import { useCVStore } from "../store/useCVStore";
 
 export default function DashboardPage() {
+  const cvData = useCVStore((state) => state.cvData);
   return (
     <DashboardLayout>
       <div className="flex w-full justify-center overflow-x-hidden px-8">
@@ -48,7 +50,7 @@ export default function DashboardPage() {
                 <AnalysisTips />
               </div>
               <div>
-                <ScoreCard />
+                <ScoreCard score={cvData?.score} />
               </div>
             </div>
 

@@ -37,33 +37,21 @@ export const useCVStore = create<CVStore>((set) => ({
 
   uploadCV: async (file: File) => {
     set({ isLoading: true, error: null })
-    await new Promise(resolve => setTimeout(resolve, 2000))
+
+    const formData = new FormData()
+    formData.append("file", file)
+
+    const res = await fetch("/api/upload-cv", {
+      method: "POST",
+      body: formData,
+    })
+
+    const data = await res.json()
+
     set({
       hasCV: true,
       isLoading: false,
-      cvData: {
-        name: 'João Silva',
-        email: 'joaosilva@email.com',
-        phone: '(11) 99999-9999',
-        location: 'São Paulo, SP',
-        totalExperience: '2 anos',
-        skills: ['WordPress', 'HTML', 'CSS', 'JavaScript', 'PHP'],
-        experience: [
-          {
-            title: 'Desenvolvedor Frontend',
-            company: 'Agência Web Solutions',
-            period: '03/2023 – Atual',
-            current: true
-          }
-        ],
-        aiAnalysis: [
-          { text: 'Destaque mais resultados com números e métricas', status: 'success' },
-          { text: 'Adicione mais palavras-chave técnicas relevantes', status: 'warning' },
-          { text: 'Organize melhor suas experiências e projetos', status: 'warning' },
-          { text: 'Inclua uma seção de certificações e cursos', status: 'success' },
-        ],
-        score: 72
-      }
+      cvData: data.cvData,
     })
   },
 

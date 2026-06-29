@@ -13,16 +13,36 @@ export async function POST(request: Request) {
     const pdf = await getDocumentProxy(uint8);
     const { text } = await extractText(pdf, { mergePages: true });
 
-    console.log("API KEY:", process.env.GEMINI_API_KEY);
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    const prompt = `Você é um analisador de currículos. Analise o currículo abaixo e responda com um resumo do candidato, suas principais skills, e 3 sugestões de melhoria.\n\nCurrículo:\n${text}`;
+    const prompt = `You are a resume analyzer. Read the resume text below and return ONLY a single valid JSON object. Do not explain anything. No markdown, no backticks, no text before or after the JSON. Use exactly this shape:
+
+{
+  "name": "",
+  "email": "",
+  "phone": "",
+  "location": "",
+  "totalExperience": "",
+  "skills": [],
+  "experience": [{ "title": "", "company": "", "period": "", "current": false }],
+  "aiAnalysis": [{ "text": "", "status": "success" }],
+  "score": 0
+}
+
+If a field is not found, use "Não informado" for text, [] for lists, 0 for score. For aiAnalysis, give 3-4 improvement suggestions, each with status "success" or "warning".
+
+Resume text:
+${text}`;
 
     const result = await model.generateContent(prompt);
-    const analise = result.response.text();
 
-    return NextResponse.json({ message: "análise pronta", analise });
+    let raw = result.response.text();
+    raw = raw.replace(/```json/g, "").replace(/```/g, "").trim();
+
+    const cvData = JSON.parse(raw);
+
+    return NextResponse.json({ message: "análise pronta", cvData });
   } catch (error) {
     console.error("ERRO NA ROTA:", error);
     return NextResponse.json(
