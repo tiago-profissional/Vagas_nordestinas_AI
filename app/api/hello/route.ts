@@ -1,5 +1,5 @@
-import { NextReponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST() {
-    return NextReponse.json({ message: "Upload route working" });
+    return NextResponse.json({ message: "Upload route working" });
 }
