@@ -25,15 +25,15 @@ export function SkillsList() {
               Envie seu currículo para ver as skills detectadas.
             </p>
           ) : (
-            <div className="grid max-w-[330px] grid-cols-3 justify-items-center gap-x-3 gap-y-4">
+            <div className="flex max-w-[330px] flex-wrap justify-center gap-2">
               {skills.map((skill) => (
                 <span
                   key={skill}
                   className="
-                    flex h-7 w-[95px] items-center justify-center
-                    rounded-full bg-yellow-50 px-2 text-center
-                    text-[12px] font-semibold leading-none
-                    text-yellow-700 whitespace-nowrap
+                    inline-flex items-center justify-center
+                    rounded-full bg-yellow-50 px-3 py-1 text-center
+                    text-[12px] font-semibold leading-snug
+                    text-yellow-700
                   "
                 >
                   {skill}
