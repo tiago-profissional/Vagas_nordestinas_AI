@@ -40,7 +40,7 @@ export default function DashboardPage() {
                 <SkillsList />
               </div>
               <div className="md:col-span-2 xl:col-span-1 [&>*]:h-full">
-                <ExperienceList />
+                <ExperienceList experiences={cvData?.experience} />
               </div>
             </div>
 
