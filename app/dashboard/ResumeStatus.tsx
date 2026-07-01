@@ -1,5 +1,4 @@
-import Image from "next/image";
-import resumeIcon from "./img/resume_icon.png";
+import { FileText } from "lucide-react";
 import { useCVStore } from "../store/useCVStore";
 
 export function ResumeStatus() {
@@ -7,13 +6,11 @@ export function ResumeStatus() {
 
   return (
     <section className="flex min-h-[250px] w-full flex-col items-center justify-center rounded-3xl border border-primary/40 bg-white p-6 text-center shadow-sm">
-      <div className="mb-5 flex items-center justify-center text-primary">
-        <Image
-          src={resumeIcon}
-          alt="Resume icon"
-          width={70}
-          height={70}
-          className="h-[70px] w-auto object-contain"
+
+      <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+        <FileText
+          className="h-8 w-8 text-primary"
+          strokeWidth={2.3}
         />
       </div>
 

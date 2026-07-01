@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import uploadIcon from "./img/upload_icon.png";
+import { CloudUpload } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { useState } from "react";
 import { useCVStore } from "../store/useCVStore";
@@ -18,14 +17,14 @@ export function UploadZone() {
   }
 
   return (
-    <div className="flex min-h-[260px] w-full flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-primary bg-white px-4 py-6 text-center sm:px-8">
-      <Image
-        src={uploadIcon}
-        alt="Upload icon"
-        width={70}
-        height={70}
-        className="h-[60px] w-auto object-contain sm:h-[70px]"
-      />
+    <div className="flex min-h-[260px] w-full flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed border-primary bg-white px-4 py-6 text-center sm:px-8">
+
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+        <CloudUpload
+          className="h-8 w-8 text-primary"
+          strokeWidth={2.3}
+        />
+      </div>
 
       <h3 className="text-base font-bold leading-tight text-gray-900 sm:text-lg">
         Arraste seu currículo ou
@@ -37,6 +36,7 @@ export function UploadZone() {
         <p className="text-xs text-gray-500 sm:text-sm">
           Formatos aceitos: PDF, DOCX
         </p>
+
         <p className="text-xs text-gray-500 sm:text-sm">
           Tamanho máximo: 5MB
         </p>
@@ -53,12 +53,16 @@ export function UploadZone() {
       />
 
       {fileName && (
-        <p className="text-sm text-green-600">
+        <p className="text-sm font-medium text-green-600">
           Selecionado: {fileName}
         </p>
       )}
 
-      <Button variant="primary" size="sm" onClick={handleUpload}>
+      <Button
+        variant="primary"
+        size="sm"
+        onClick={handleUpload}
+      >
         Enviar Currículo
       </Button>
     </div>
