@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import uploadIcon from "./img/upload_icon.png";
 import { Button } from "../components/ui/Button";
 import { useState } from "react";
 import { useCVStore } from "../store/useCVStore";
@@ -12,13 +13,14 @@ export function UploadZone() {
 
   async function handleUpload() {
     if (!file) return;
+
     await uploadCV(file);
   }
 
   return (
     <div className="flex min-h-[260px] w-full flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-primary bg-white px-4 py-6 text-center sm:px-8">
       <Image
-        src="/images/sub_images/upload_icon.png"
+        src={uploadIcon}
         alt="Upload icon"
         width={70}
         height={70}
