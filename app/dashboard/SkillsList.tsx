@@ -8,33 +8,28 @@ export function SkillsList() {
   const totalSkills = skills.length;
 
   return (
-    <Card variant="dashboard" className="overflow-hidden rounded-[22px] border border-gray-200 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
-      <div className="flex h-full w-full flex-col p-5">
+    <Card variant="dashboard" className="overflow-hidden">
+      <div className="flex h-full w-full flex-col">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-yellow-100 text-sm font-bold text-yellow-600">
+        <div className="mb-6 flex items-center justify-center gap-3">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-yellow-100 text-sm font-bold text-yellow-600">
             {"</>"}
           </div>
-          <h2 className="text-[18px] font-bold text-gray-900">Skills detectadas</h2>
+          <h2 className="text-base font-bold text-gray-900 sm:text-lg">Skills detectadas</h2>
         </div>
 
         {/* Middle */}
         <div className="flex flex-1 items-center justify-center">
           {!hasCV || !cvData ? (
-            <p className="text-center text-[15px] text-gray-400">
+            <p className="px-2 text-center text-sm text-gray-400 sm:text-[15px]">
               Envie seu currículo para ver as skills detectadas.
             </p>
           ) : (
-            <div className="flex max-w-[330px] flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-2">
               {skills.map((skill) => (
                 <span
                   key={skill}
-                  className="
-                    inline-flex items-center justify-center
-                    rounded-full bg-yellow-50 px-3 py-1 text-center
-                    text-[12px] font-semibold leading-snug
-                    text-yellow-700
-                  "
+                  className="inline-flex items-center justify-center rounded-full bg-yellow-50 px-3 py-1 text-center text-xs font-semibold leading-snug text-yellow-700 sm:text-[13px]"
                 >
                   {skill}
                 </span>
@@ -44,14 +39,12 @@ export function SkillsList() {
         </div>
 
         {/* Footer */}
-        <div className="mt-[-10px] flex w-full justify-center px-[22px]">
-          <footer className="flex w-full max-w-[300px] items-center justify-between">
-            <button className="text-[15px] font-semibold text-yellow-600">
-              Ver todas as skills ({totalSkills})
-            </button>
-            <span className="text-lg text-yellow-500">→</span>
-          </footer>
-        </div>
+        <footer className="mt-6 flex w-full items-center justify-between gap-2">
+          <button className="text-sm font-semibold text-yellow-600 sm:text-[15px]">
+            Ver todas as skills ({totalSkills})
+          </button>
+          <span className="shrink-0 text-lg text-yellow-500">→</span>
+        </footer>
       </div>
     </Card>
   );

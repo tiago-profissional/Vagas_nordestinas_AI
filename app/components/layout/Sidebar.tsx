@@ -17,7 +17,7 @@ export function Sidebar() {
 
   return (
     <nav className="h-full w-full overflow-y-auto bg-[#F1F1EF] shadow-sm">
-      <div className="grid grid-cols-1 gap-3 px-5 pt-8">
+      <div className="grid grid-cols-1 gap-2 px-4 pt-6">
         {menuItems.map((item) => {
           const isActive = pathname === item.href;
 
@@ -28,15 +28,14 @@ export function Sidebar() {
               className={`
                 group
                 grid
-                h-[64px]
-                grid-cols-[55px_1fr]
+                h-[52px]
+                grid-cols-[40px_1fr]
                 items-center
-                rounded-2xl
-                px-5
+                rounded-xl
+                px-3
                 transition-all
                 duration-300
                 ease-in-out
-                hover:h-[74px]
                 hover:scale-[1.02]
                 ${
                   isActive
@@ -45,11 +44,11 @@ export function Sidebar() {
                 }
               `}
             >
-              <span className="text-center text-3xl transition-transform duration-300 group-hover:scale-110">
+              <span className="text-center text-xl transition-transform duration-300 group-hover:scale-110">
                 {item.icon}
               </span>
 
-              <span className="text-[18px] font-bold transition-all duration-300">
+              <span className="whitespace-nowrap text-[15px] font-bold transition-all duration-300">
                 {item.label}
               </span>
             </Link>

@@ -19,24 +19,24 @@ export function UploadZone() {
   }
 
   return (
-    <div className="flex h-[260px] w-[440px] flex-col items-center justify-center gap-[10px] overflow-visible rounded-3xl border-2 border-dashed border-primary bg-white px-8 py-5 text-center">
+    <div className="flex min-h-[260px] w-full flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-primary bg-white px-4 py-6 text-center sm:px-8">
       <Image
         src="/images/sub_images/upload_icon.png"
         alt="Upload icon"
         width={70}
         height={70}
-        className="h-[70px] w-[100px] object-contain"
+        className="h-[60px] w-auto object-contain sm:h-[70px]"
       />
 
-      <h3 className="text-lg font-bold leading-tight text-gray-900">
+      <h3 className="text-base font-bold leading-tight text-gray-900 sm:text-lg">
         Arraste seu currículo ou
         <br />
         clique para enviar
       </h3>
 
       <div>
-        <p className="text-sm text-gray-500">Formatos aceitos: PDF, DOCX</p>
-        <p className="text-sm text-gray-500">Tamanho máximo: 5MB</p>
+        <p className="text-xs text-gray-500 sm:text-sm">Formatos aceitos: PDF, DOCX</p>
+        <p className="text-xs text-gray-500 sm:text-sm">Tamanho máximo: 5MB</p>
       </div>
 
       <input
@@ -46,6 +46,7 @@ export function UploadZone() {
           setFile(chosen);
           setFileName(chosen?.name ?? "");
         }}
+        className="max-w-full text-xs sm:text-sm"
       />
 
       {fileName && <p className="text-sm text-green-600">Selecionado: {fileName}</p>}
