@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { Button } from "../components/ui/Button";
@@ -11,10 +11,7 @@ export function UploadZone() {
   const uploadCV = useCVStore((state) => state.uploadCV);
 
   async function handleUpload() {
-    if (!file) {
-      return;
-    }
-
+    if (!file) return;
     await uploadCV(file);
   }
 
@@ -35,8 +32,12 @@ export function UploadZone() {
       </h3>
 
       <div>
-        <p className="text-xs text-gray-500 sm:text-sm">Formatos aceitos: PDF, DOCX</p>
-        <p className="text-xs text-gray-500 sm:text-sm">Tamanho máximo: 5MB</p>
+        <p className="text-xs text-gray-500 sm:text-sm">
+          Formatos aceitos: PDF, DOCX
+        </p>
+        <p className="text-xs text-gray-500 sm:text-sm">
+          Tamanho máximo: 5MB
+        </p>
       </div>
 
       <input
@@ -49,7 +50,11 @@ export function UploadZone() {
         className="max-w-full text-xs sm:text-sm"
       />
 
-      {fileName && <p className="text-sm text-green-600">Selecionado: {fileName}</p>}
+      {fileName && (
+        <p className="text-sm text-green-600">
+          Selecionado: {fileName}
+        </p>
+      )}
 
       <Button variant="primary" size="sm" onClick={handleUpload}>
         Enviar Currículo
