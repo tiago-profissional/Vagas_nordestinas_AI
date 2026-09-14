@@ -10,7 +10,6 @@ import { ScoreCard } from "./ScoreCard";
 import { AnalysisTips } from "./AnalysisTips";
 import { NextSteps } from "./NextSteps";
 import { useCVStore } from "../store/useCVStore";
-import { Modal } from "../components/ui/Modal";
 
 export default function DashboardPage() {
   const cvData = useCVStore((state) => state.cvData);
@@ -31,9 +30,6 @@ export default function DashboardPage() {
               <ResumeStatus />
             </div>
           </div>
-
-          {/* Modal sem reservar espaço na página */}
-          <Modal />
 
           {/* Segunda linha */}
           <div className="grid grid-cols-1 items-stretch gap-8 md:grid-cols-2 xl:grid-cols-3">
