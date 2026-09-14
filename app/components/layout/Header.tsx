@@ -1,7 +1,7 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-
 import Avatar from "@/app/components/ui/Avatar";
 
 type HeaderProps = {
@@ -21,6 +21,7 @@ export default function Header({
   return (
     <header className="fixed left-0 top-0 z-50 h-[80px] w-full border-b border-[var(--border-light)] bg-[var(--surface)] shadow-sm">
       <div className="flex h-full items-center justify-between gap-3 px-3 sm:px-6">
+        {/* Lado esquerdo */}
         <div className="flex min-w-0 items-center gap-2">
           <button
             type="button"
@@ -31,25 +32,47 @@ export default function Header({
             ☰
           </button>
 
-          <h1 className="truncate text-base font-bold text-[var(--brand-orange)] sm:text-xl lg:text-[28px]">
-            Vagas Nordestinas
-          </h1>
+          <a
+            href="https://vagasnordestinas.com/"
+            aria-label="Ir para Vagas Nordestinas"
+            className="flex shrink-0 items-center"
+          >
+            <Image
+              src="/logo-vagas-nordestinas.png"
+              alt="Vagas Nordestinas"
+              width={180}
+              height={88}
+              priority
+              className="h-[45px] w-auto object-contain sm:h-[55px]"
+            />
+          </a>
         </div>
 
+        {/* Links centrais */}
         <nav className="hidden items-center gap-6 min-[650px]:flex">
-          <Link href="/vagas" className={navLinkClasses}>
+          <a
+            href="https://vagasnordestinas.com/"
+            className={navLinkClasses}
+          >
             Vagas
-          </Link>
+          </a>
 
-          <Link href="/avaliacoes" className={navLinkClasses}>
-            Avaliações da Empresa
-          </Link>
+          <a
+            href="https://vagasnordestinas.com/dashboard"
+            className={navLinkClasses}
+          >
+            Dashboard
+          </a>
 
-          <Link href="/cargos" className={navLinkClasses}>
-            Cargos e Salários
+          <Link
+            href="/dashboard"
+            className={`${navLinkClasses} text-[var(--brand-orange)]`}
+          >
+            AI Resume
           </Link>
         </nav>
 
+        {/* Perfil */}
         <div className="flex shrink-0 items-center gap-3">
           <button
             type="button"
