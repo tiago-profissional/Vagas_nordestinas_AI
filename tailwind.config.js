@@ -2,133 +2,130 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Brand colors
         primary: {
-          DEFAULT: '#C9A227',
-          light: '#F4B400',
-          dark: '#A07D1F',
-          10: 'rgba(244, 180, 0, 0.1)',
-          hover: '#B38A1F',
-          active: '#9E7718',
+          DEFAULT: "#EA7805",
+          light: "#F1B435",
+          dark: "#7E4220",
+          10: "rgba(234, 120, 5, 0.1)",
+          hover: "#D66C04",
+          active: "#B85C03",
         },
-        
-        // Secondary colors
+
         secondary: {
-          DEFAULT: '#6B5ED6',
-          light: '#8A7FE0',
-          dark: '#4E44B0',
-          hover: '#5A4EC2',
-          active: '#4A3EA8',
-          10: 'rgba(107, 94, 214, 0.1)',
+          DEFAULT: "#7E4220",
+          light: "#A85A2C",
+          dark: "#191815",
+          10: "rgba(126, 66, 32, 0.1)",
+          hover: "#68361A",
+          active: "#4F2813",
         },
-        
-        // Semantic colors
+
         success: {
-          DEFAULT: '#4de7b7',
-          dark: '#2DBA8F',
-          hover: '#3DCFA3',
-          active: '#2DB88A',
-          10: 'rgba(77, 231, 183, 0.1)',
+          DEFAULT: "#22C55E",
+          dark: "#15803D",
+          hover: "#16A34A",
+          active: "#15803D",
+          10: "rgba(34, 197, 94, 0.1)",
         },
-        
+
         warning: {
-          DEFAULT: '#F4B400',
-          dark: '#C9A227',
-          hover: '#DDA000',
-          active: '#C48C00',
-          10: 'rgba(244, 180, 0, 0.1)',
+          DEFAULT: "#F1B435",
+          dark: "#7E4220",
+          hover: "#DFA126",
+          active: "#C98C1A",
+          10: "rgba(241, 180, 53, 0.15)",
         },
-        
+
         error: {
-          DEFAULT: '#EF4444',
-          dark: '#DC2626',
-          hover: '#DC2626',
-          active: '#B91C1C',
-          10: 'rgba(239, 68, 68, 0.1)',
+          DEFAULT: "#EF4444",
+          dark: "#DC2626",
+          hover: "#DC2626",
+          active: "#B91C1C",
+          10: "rgba(239, 68, 68, 0.1)",
         },
-        
+
         info: {
-          DEFAULT: '#3B82F6',
-          hover: '#2563EB',
-          active: '#1D4ED8',
-          10: 'rgba(59, 130, 246, 0.1)',
+          DEFAULT: "#3B82F6",
+          dark: "#1D4ED8",
+          hover: "#2563EB",
+          active: "#1D4ED8",
+          10: "rgba(59, 130, 246, 0.1)",
         },
-        
-        // Legacy colors (your original names)
+
         second: {
-          DEFAULT: '#181A1B',
-          hover: '#2A2C2E',
-          active: '#3A3C3F',
+          DEFAULT: "#191815",
+          hover: "#2D211B",
+          active: "#7E4220",
         },
-        
+
         third: {
-          DEFAULT: '#FFFFFF',
-          hover: '#F5F5F5',
-          active: '#EBEBEB',
+          DEFAULT: "#FFF5EA",
+          hover: "#F9EADB",
+          active: "#F2DCC8",
         },
-        
+
         forth: {
-          DEFAULT: '#F4B400',
-          hover: '#DDA000',
-          active: '#C48C00',
-          10: 'rgba(244, 180, 0, 0.1)',
+          DEFAULT: "#EA7805",
+          hover: "#D66C04",
+          active: "#B85C03",
+          10: "rgba(234, 120, 5, 0.1)",
         },
-        
+
         fifth: {
-          DEFAULT: '#6B5ED6',
-          hover: '#5A4EC2',
-          active: '#4A3EA8',
+          DEFAULT: "#7E4220",
+          hover: "#68361A",
+          active: "#4F2813",
         },
-        
+
         sixth: {
-          DEFAULT: '#7F7F7F',
-          hover: '#6A6A6A',
-          active: '#555555',
+          DEFAULT: "#6F625A",
+          hover: "#584D46",
+          active: "#403833",
         },
-        
+
         seventh: {
-          DEFAULT: '#EF4444',
-          hover: '#DC2626',
-          active: '#B91C1C',
+          DEFAULT: "#EF4444",
+          hover: "#DC2626",
+          active: "#B91C1C",
         },
-        
-        // Gray scale
+
         gray: {
-          100: '#e6e9f0',
-          200: '#cdd3e1',
-          300: '#aab3cc',
-          400: '#555f7d',
-          500: '#454f6a',
-          600: '#363d56',
-          700: '#272f43',
-          800: '#181f2e',
-          900: '#0a0f1a',
+          50: "#FFFAF5",
+          100: "#FFF5EA",
+          200: "#F2DCC8",
+          300: "#D8BAA2",
+          400: "#AD8D76",
+          500: "#806B5D",
+          600: "#624F44",
+          700: "#49382F",
+          800: "#2D211B",
+          900: "#191815",
         },
-        
-        // Backgrounds
+
         bg: {
-          primary: '#FFFFFF',
-          secondary: '#F7F7F7',
-          dark: '#181A1B',
+          primary: "#FFF5EA",
+          secondary: "#F9EADB",
+          dark: "#191815",
         },
-        
-        // Text colors
+
         text: {
-          primary: '#0a0f1a',
-          secondary: '#555f7d',
-          disabled: '#aab3cc',
-          white: '#FFFFFF',
-          dark: '#181A1B',
+          primary: "#191815",
+          secondary: "#7E4220",
+          disabled: "#AD8D76",
+          white: "#FFF5EA",
+          dark: "#191815",
+          onPrimary: "#191815",
         },
-        
-        // Border colors
+
         border: {
-          light: '#e6e9f0',
-          medium: '#cdd3e1',
-          dark: '#aab3cc',
+          light: "#F2DCC8",
+          medium: "#D8BAA2",
+          dark: "#7E4220",
+          primary: "#EA7805",
         },
       },
     },
   },
+
   plugins: [],
-}
+};

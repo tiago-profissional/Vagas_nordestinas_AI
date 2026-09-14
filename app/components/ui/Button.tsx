@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type ButtonProps = {
   children: ReactNode;
@@ -9,11 +9,14 @@ type ButtonProps = {
 };
 
 const baseClasses =
-  "inline-flex items-center justify-center rounded-xl font-semibold transition hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center rounded-xl font-semibold transition-all hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50";
 
 const variantClasses = {
-  primary: "!bg-[#C9A227] !text-white shadow-md",
-  secondary: "!bg-white !text-[#C9A227] border border-[#C9A227]",
+  primary:
+    "bg-[var(--primary)] text-[var(--text-on-primary)] shadow-md hover:bg-[var(--primary-hover)]",
+
+  secondary:
+    "border border-[var(--primary)] bg-[var(--surface)] text-[var(--primary-dark)] hover:bg-[var(--primary-10)]",
 };
 
 const sizeClasses = {

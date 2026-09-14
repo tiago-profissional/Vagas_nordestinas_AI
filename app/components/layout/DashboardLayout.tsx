@@ -1,54 +1,58 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+
 import { Sidebar } from "./Sidebar";
 import Header from "./Header";
 
 type DashboardLayoutProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
-export function DashboardLayout({ children }: DashboardLayoutProps) {
+export function DashboardLayout({
+  children,
+}: DashboardLayoutProps) {
   const [menuAberto, setMenuAberto] = useState(false);
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-white">
-      {/* HEADER — recebe a função que abre o menu (o botão ☰ vive nele) */}
+    <div className="flex min-h-screen w-full flex-col bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Header onMenuClick={() => setMenuAberto(true)} />
 
-      {/* Abaixo do header (80px de altura) */}
       <div className="flex flex-1 pt-[80px]">
-        {/* SIDEBAR DESKTOP/TABLET — fixa, aparece de md (768px) pra cima */}
+        {/* Sidebar para desktop e tablet */}
         <aside className="hidden md:block md:w-[300px] md:shrink-0">
-          <div className="sticky top-[80px] h-[calc(100vh-80px)] overflow-y-auto bg-[#F1F1EF]">
+          <div className="sticky top-[80px] h-[calc(100vh-80px)] overflow-y-auto border-r border-[var(--border-light)] bg-[var(--surface-muted)]">
             <Sidebar />
           </div>
         </aside>
 
-        {/* SIDEBAR MOBILE — drawer, só existe abaixo de md, quando aberto */}
+        {/* Sidebar mobile */}
         {menuAberto && (
           <div className="fixed inset-0 z-50 md:hidden">
-            {/* fundo escuro: tocar nele fecha o menu */}
-            <div
-              className="absolute inset-0 bg-black/50"
+            <button
+              type="button"
+              className="absolute inset-0 cursor-default bg-[rgba(25,24,21,0.65)]"
               onClick={() => setMenuAberto(false)}
+              aria-label="Fechar menu"
             />
-            {/* painel que desliza da esquerda */}
-            <div className="absolute left-0 top-0 h-full w-[280px] max-w-[80%] overflow-y-auto bg-[#F1F1EF] shadow-xl">
+
+            <div className="absolute left-0 top-0 h-full w-[280px] max-w-[80%] overflow-y-auto border-r border-[var(--border-dark)] bg-[var(--surface-muted)] shadow-xl">
               <button
+                type="button"
                 onClick={() => setMenuAberto(false)}
-                className="flex h-12 w-12 items-center justify-center text-2xl text-gray-600"
+                className="flex h-12 w-12 items-center justify-center text-2xl text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--primary)]"
                 aria-label="Fechar menu"
               >
                 ✕
               </button>
+
               <Sidebar />
             </div>
           </div>
         )}
 
-        {/* CONTEÚDO */}
-        <main className="min-w-0 flex-1 overflow-x-hidden px-4 py-6 sm:px-6 sm:py-8">
+        {/* Conteúdo */}
+        <main className="min-w-0 flex-1 overflow-x-hidden bg-[var(--bg-primary)] px-4 py-6 sm:px-6 sm:py-8">
           {children}
         </main>
       </div>

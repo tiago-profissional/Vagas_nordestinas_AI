@@ -29,14 +29,24 @@ export function ExtractedInfo() {
     </Card>
   );
 }
+ 
 
 function InfoRow({ label, value }: { label: string; value?: string }) {
+
   return (
+
     <div className="grid grid-cols-[110px_1fr] items-center gap-4 sm:grid-cols-[130px_1fr]">
+
       <span className="text-sm font-bold text-gray-900 sm:text-[15px]">{label}</span>
+
       <span className="truncate text-sm font-medium text-gray-600 sm:text-[15px]">
+
         {value || "Não informado"}
+
       </span>
+
     </div>
+
   );
+
 }

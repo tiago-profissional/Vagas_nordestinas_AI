@@ -4,19 +4,43 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const menuItems = [
-  { label: "Meu Currículo", href: "/dashboard", icon: "📄" },
-  { label: "Minhas Vagas", href: "/dashboard/jobs", icon: "💼" },
-  { label: "Criar Nova Vaga", href: "/dashboard/create-job", icon: "➕" },
-  { label: "Perfil", href: "/dashboard/profile", icon: "👤" },
-  { label: "Configurações", href: "/dashboard/settings", icon: "⚙️" },
-  { label: "Sair", href: "/", icon: "↪️" },
+  {
+    label: "Meu Currículo",
+    href: "/dashboard",
+    icon: "📄",
+  },
+  {
+    label: "Minhas Vagas",
+    href: "/dashboard/jobs",
+    icon: "💼",
+  },
+  {
+    label: "Criar Nova Vaga",
+    href: "/dashboard/create-job",
+    icon: "➕",
+  },
+  {
+    label: "Perfil",
+    href: "/dashboard/profile",
+    icon: "👤",
+  },
+  {
+    label: "Configurações",
+    href: "/dashboard/settings",
+    icon: "⚙️",
+  },
+  {
+    label: "Sair",
+    href: "/",
+    icon: "↪️",
+  },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <nav className="h-full w-full overflow-y-auto bg-[#F1F1EF] shadow-sm">
+    <nav className="h-full w-full overflow-y-auto bg-[var(--surface-muted)] shadow-sm">
       <div className="grid grid-cols-1 gap-2 px-4 pt-6">
         {menuItems.map((item) => {
           const isActive = pathname === item.href;
@@ -39,8 +63,8 @@ export function Sidebar() {
                 hover:scale-[1.02]
                 ${
                   isActive
-                    ? "bg-[#C9A227] text-white shadow-lg"
-                    : "text-[#181A1B] hover:bg-[#C9A227] hover:text-white hover:shadow-xl"
+                    ? "bg-[var(--primary)] text-[var(--text-on-primary)] shadow-lg"
+                    : "text-[var(--text-primary)] hover:bg-[var(--primary-10)] hover:text-[var(--primary-dark)] hover:shadow-md"
                 }
               `}
             >
@@ -48,7 +72,7 @@ export function Sidebar() {
                 {item.icon}
               </span>
 
-              <span className="whitespace-nowrap text-[15px] font-bold transition-all duration-300">
+              <span className="whitespace-nowrap text-[15px] font-bold">
                 {item.label}
               </span>
             </Link>
