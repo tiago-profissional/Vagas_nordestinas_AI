@@ -1,5 +1,10 @@
 import Card from "@/app/components/ui/Card";
-import { mockResume } from "../data/mockResume";
+
+type ResumeSummaryCardProps = {
+  skillsCount: number;
+  experience: string;
+  location: string;
+};
 
 type ResumeMetricProps = {
   icon: string;
@@ -7,23 +12,25 @@ type ResumeMetricProps = {
   value: string;
 };
 
-export function ResumeSummaryCard() {
-  const skillsCount = mockResume.skills.length;
-
+export function ResumeSummaryCard({
+  skillsCount,
+  experience,
+  location,
+}: ResumeSummaryCardProps) {
   const skillsText = `${skillsCount} ${
     skillsCount === 1 ? "habilidade" : "habilidades"
   }`;
 
   return (
-    <Card className="h-auto min-h-0 rounded-2xl border-yellow-200 px-5 py-5 lg:px-6 lg:py-5">
+    <Card className="h-auto min-h-0 rounded-2xl border-[var(--border-medium)] bg-[var(--surface)] px-5 py-5 lg:px-6 lg:py-5">
       <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-yellow-300 bg-yellow-50 text-2xl">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[var(--brand-yellow)] bg-[var(--primary-10)] text-2xl">
             📄
           </div>
 
           <div>
-            <h2 className="text-lg font-bold text-gray-900">
+            <h2 className="text-lg font-bold text-[var(--text-primary)]">
               Seu currículo atual
             </h2>
 
@@ -43,19 +50,19 @@ export function ResumeSummaryCard() {
           <ResumeMetric
             icon="⏱️"
             label="Experiência total"
-            value={mockResume.experience}
+            value={experience}
           />
 
           <ResumeMetric
             icon="📍"
             label="Localização"
-            value={mockResume.location}
+            value={location}
           />
         </div>
 
         <button
           type="button"
-          className="rounded-xl border border-gray-300 px-5 py-3 text-sm font-semibold text-gray-800 transition hover:bg-gray-50"
+          className="rounded-xl border border-[var(--border-dark)] px-5 py-3 text-sm font-semibold text-[var(--primary-dark)] transition hover:bg-[var(--primary-10)] hover:text-[var(--primary)]"
         >
           Ver detalhes do currículo
         </button>
@@ -64,16 +71,25 @@ export function ResumeSummaryCard() {
   );
 }
 
-function ResumeMetric({ icon, label, value }: ResumeMetricProps) {
+function ResumeMetric({
+  icon,
+  label,
+  value,
+}: ResumeMetricProps) {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-100">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--surface-muted)]">
         {icon}
       </div>
 
       <div>
-        <p className="text-sm font-medium text-gray-900">{label}</p>
-        <p className="text-sm text-gray-500">{value}</p>
+        <p className="text-sm font-medium text-[var(--text-primary)]">
+          {label}
+        </p>
+
+        <p className="text-sm text-[var(--text-secondary)]">
+          {value}
+        </p>
       </div>
     </div>
   );
