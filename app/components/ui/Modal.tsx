@@ -1,4 +1,6 @@
-import { useEffect } from "react";
+"use client";
+
+import { useEffect, type ReactNode } from "react";
 
 type ModalProps = {
   isOpen: boolean;
@@ -41,11 +43,13 @@ export function Modal({
         onClick={onClose}
         className="absolute inset-0 cursor-default bg-black/55 backdrop-blur-[2px]"
       />
+
       <div className="relative z-10 max-h-[85vh] w-full max-w-3xl overflow-hidden rounded-2xl bg-white shadow-2xl">
         <header className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
           <h2 className="text-xl font-bold text-gray-900">
             {title}
           </h2>
+
           <button
             type="button"
             onClick={onClose}
@@ -55,6 +59,7 @@ export function Modal({
             ✕
           </button>
         </header>
+
         <div className="max-h-[calc(85vh-80px)] overflow-y-auto p-6">
           {children}
         </div>

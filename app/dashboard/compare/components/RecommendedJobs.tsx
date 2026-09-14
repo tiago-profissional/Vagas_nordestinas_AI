@@ -1,13 +1,15 @@
 "use client";
 
-
-import { JobMatchCard, type JobMatch } from "./JobMatchCard";
+import { JobMatchCard } from "./JobMatchCard";
+import type { JobMatch } from "../types";
 
 type RecommendedJobsProps = {
   jobs: JobMatch[];
 };
 
-export function RecommendedJobs({ jobs }: RecommendedJobsProps) {
+export function RecommendedJobs({
+  jobs,
+}: RecommendedJobsProps) {
   return (
     <section>
       <div className="mb-5 flex flex-wrap items-center gap-3">
@@ -24,27 +26,11 @@ export function RecommendedJobs({ jobs }: RecommendedJobsProps) {
         </span>
       </div>
 
-      <div
-        className="
-          small-scrollbar
-          flex
-          snap-x
-          snap-mandatory
-          gap-5
-          overflow-x-auto
-          pb-3
-          scroll-smooth
-        "
-      >
+      <div className="small-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-3">
         {jobs.map((job) => (
           <div
             key={job.id}
-            className="
-              min-w-[280px]
-              max-w-[320px]
-              flex-none
-              snap-start
-            "
+            className="min-w-[280px] max-w-[320px] flex-none snap-start"
           >
             <JobMatchCard
               job={job}
