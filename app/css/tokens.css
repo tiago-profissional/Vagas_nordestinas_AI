@@ -1,0 +1,21 @@
+/* tokens.css | Tokens EXTRAS (só o que o theme.css ainda não tem) */
+:root {
+  /* Laranja para TEXTO sobre fundo claro (contraste 4.8:1) */
+  --cor-primaria-texto: #b35a00;
+
+  /* Amarelo suave (chips, badges, ícones, destaques) */
+  --cor-destaque-10: rgb(241 180 53 / 10%);
+  --cor-destaque-14: rgb(241 180 53 / 14%);
+  --cor-destaque-22: rgb(241 180 53 / 22%);
+  --cor-destaque-borda: rgb(241 180 53 / 60%);
+
+  /* Controles */
+  --cor-trilho: rgb(25 24 21 / 25%);
+  --cor-barra-fundo: var(--cor-fundo);
+
+  /* Dimensões */
+  --altura-barra: 12px;
+  --altura-toggle: 24px;
+  --largura-toggle: 44px;
+  --largura-pagina: 1450px;
+}

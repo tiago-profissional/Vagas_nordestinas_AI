@@ -9,13 +9,11 @@ import { mockResume } from "./data/mockResume";
 
 export default function ComparePage() {
   return (
-    <div className="mx-auto w-[95%] max-w-[1450px] space-y-6">
+    <>
       <header>
-        <h1 className="text-3xl font-bold text-white">
-          Comparar currículo com vaga
-        </h1>
+        <h1 className="vn-title">Comparar currículo com vaga</h1>
 
-        <p className="mt-2 text-gray-400">
+        <p className="vn-description">
           Escolha uma vaga para analisar a compatibilidade com seu currículo.
         </p>
       </header>
@@ -31,6 +29,6 @@ export default function ComparePage() {
       <RecommendedJobs jobs={mockJobs} />
 
       <NextStepCard />
-    </div>
+    </>
   );
 }

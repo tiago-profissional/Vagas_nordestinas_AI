@@ -2,21 +2,16 @@ import Card from "@/app/components/ui/Card";
 
 export function NextStepCard() {
   return (
-    <Card
-      variant="banner"
-      className="rounded-2xl border-yellow-200 bg-yellow-50/40 px-6 py-5"
-    >
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-yellow-100 text-2xl">
-          ⭐
-        </div>
+    <Card className="cmp-card cmp-card--highlight">
+      <div className="cmp-next">
+        <div className="vn-card-icon vn-card-icon--round" aria-hidden="true">⭐</div>
 
         <div>
-          <h2 className="text-lg font-bold text-gray-900">
+          <h2 className="vn-card-title">
             Próximo passo: escolha uma vaga para visualizar o matching detalhado.
           </h2>
 
-          <p className="mt-1 text-sm text-gray-600">
+          <p className="cmp-next__text">
             Ao clicar em “Comparar”, você verá um relatório completo com
             compatibilidade de skills, experiência e sugestões de melhoria.
           </p>

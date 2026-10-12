@@ -1,43 +1,43 @@
-import type { ReactNode } from "react";
+"use client";
 
-type ButtonProps = {
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+
+type ButtonProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "children"
+> & {
   children: ReactNode;
   variant?: "primary" | "secondary";
   size?: "sm" | "md" | "lg";
-  onClick?: () => void;
-  disabled?: boolean;
 };
 
-const baseClasses =
-  "inline-flex items-center justify-center rounded-xl font-semibold transition-all hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50";
-
-const variantClasses = {
+const variants = {
   primary:
-    "bg-[var(--primary)] text-[var(--text-on-primary)] shadow-md hover:bg-[var(--primary-hover)]",
+    "border-primary bg-primary text-text-on-primary enabled:hover:border-primary-hover enabled:hover:bg-primary-hover enabled:active:bg-primary-active",
 
   secondary:
-    "border border-[var(--primary)] bg-[var(--surface)] text-[var(--primary-dark)] hover:bg-[var(--primary-10)]",
+    "border-secondary bg-transparent text-secondary enabled:hover:bg-[var(--secondary-10)]",
 };
 
-const sizeClasses = {
-  sm: "h-[40px] w-[160px] text-sm",
-  md: "h-[50px] w-[200px] text-base",
-  lg: "h-[56px] w-[240px] text-lg",
+const sizes = {
+  sm: "min-h-[var(--altura-botao)] px-4 py-2 text-sm",
+  md: "min-h-[var(--altura-botao)] px-5 py-2.5 text-base",
+  lg: "min-h-[48px] px-6 py-3 text-lg",
 };
 
 export function Button({
   children,
   variant = "primary",
   size = "md",
-  onClick,
-  disabled = false,
+  type = "button",
+  className = "",
+  ...props
 }: ButtonProps) {
   return (
     <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]}`}
+      {...props}
+      type={type}
+      className={`vn-button max-w-full ${variants[variant]} ${sizes[size]} ${className}`}
     >
       {children}
     </button>

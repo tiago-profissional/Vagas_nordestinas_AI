@@ -3,23 +3,27 @@
 import { useState } from "react";
 import Card from "@/app/components/ui/Card";
 
-
 export function FiltersCard() {
-
-  const [search, setSearch] = useState("");  
+  const [search, setSearch] = useState("");
   const [area, setArea] = useState("todas");
 
   return (
-    <Card>
-      <div>
-        <div>
-          <label htmlFor="cargo">
+    <Card className="cmp-card">
+      <div className="vn-card-heading">
+        <div className="vn-card-icon vn-card-icon--round" aria-hidden="true">🔎</div>
+        <h2 className="vn-card-title">Filtrar vagas</h2>
+      </div>
+
+      <div className="cmp-filters">
+        <div className="cmp-field--wide">
+          <label htmlFor="cargo" className="vn-label">
             Buscar por cargo ou palavra-chave
           </label>
 
           <input
             type="text"
             id="cargo"
+            className="vn-input"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Ex.: Vendedor, Enfermeiro, Desenvolvedor..."
@@ -27,12 +31,14 @@ export function FiltersCard() {
         </div>
 
         <div>
-          <label htmlFor="area">Área profissional</label>
+          <label htmlFor="area" className="vn-label">Área profissional</label>
 
           <select
-          id="area"
-          value={area}
-          onChange={(event) => setArea(event.target.value)}>
+            id="area"
+            className="vn-input"
+            value={area}
+            onChange={(event) => setArea(event.target.value)}
+          >
             <option value="todas">Todas as áreas</option>
             <option value="administrativo">Administrativo</option>
             <option value="comercial">Comercial e Vendas</option>
@@ -44,19 +50,20 @@ export function FiltersCard() {
         </div>
 
         <div>
-          <label htmlFor="localizacao">Localização</label>
+          <label htmlFor="localizacao" className="vn-label">Localização</label>
 
           <input
             type="text"
             id="localizacao"
+            className="vn-input"
             placeholder="Cidade ou estado"
           />
         </div>
 
         <div>
-          <label htmlFor="modalidade">Modalidade</label>
+          <label htmlFor="modalidade" className="vn-label">Modalidade</label>
 
-          <select id="modalidade" defaultValue="todas">
+          <select id="modalidade" className="vn-input" defaultValue="todas">
             <option value="todas">Todas</option>
             <option value="remoto">Remoto</option>
             <option value="hibrido">Híbrido</option>
@@ -65,9 +72,9 @@ export function FiltersCard() {
         </div>
 
         <div>
-          <label htmlFor="nivel">Nível profissional</label>
+          <label htmlFor="nivel" className="vn-label">Nível profissional</label>
 
-          <select id="nivel" defaultValue="todos">
+          <select id="nivel" className="vn-input" defaultValue="todos">
             <option value="todos">Todos</option>
             <option value="estagio">Estágio</option>
             <option value="assistente">Assistente</option>
@@ -79,9 +86,9 @@ export function FiltersCard() {
         </div>
 
         <div>
-          <label htmlFor="contrato">Tipo de contrato</label>
+          <label htmlFor="contrato" className="vn-label">Tipo de contrato</label>
 
-          <select id="contrato" defaultValue="todos">
+          <select id="contrato" className="vn-input" defaultValue="todos">
             <option value="todos">Todos</option>
             <option value="clt">CLT</option>
             <option value="pj">PJ</option>
@@ -92,16 +99,19 @@ export function FiltersCard() {
         </div>
 
         <div>
-          <label htmlFor="ordenacao">Ordenar por</label>
+          <label htmlFor="ordenacao" className="vn-label">Ordenar por</label>
 
-          <select id="ordenacao" defaultValue="compativeis">
+          <select id="ordenacao" className="vn-input" defaultValue="compativeis">
             <option value="compativeis">Mais compatíveis</option>
             <option value="recentes">Mais recentes</option>
             <option value="salario">Maior salário</option>
           </select>
         </div>
 
-        <button type="button">
+        <button
+          type="button"
+          className="vn-button vn-button--outline cmp-filters__clear"
+        >
           Limpar filtros
         </button>
       </div>

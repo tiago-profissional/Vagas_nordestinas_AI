@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type CardVariant =
   | "default"
@@ -16,7 +16,7 @@ type CardProps = {
   variant?: CardVariant;
 };
 
-const variantClasses: Record<CardVariant, string> = {
+const variants: Record<CardVariant, string> = {
   default: "min-h-[240px]",
   middle: "min-h-[285px]",
   wide: "min-h-[300px]",
@@ -34,34 +34,16 @@ export default function Card({
 }: CardProps) {
   return (
     <div
-      className={`
-        flex
-        h-full
-        w-full
-        min-w-0
-        flex-col
-        rounded-3xl
-        border
-        border-neutral-200
-        bg-white
-        p-6
-        shadow-sm
-        transition-all
-        duration-300
-        sm:p-7
-        lg:p-8
-        ${variantClasses[variant]}
-        ${className}
-      `}
+      className={`vn-card flex h-full w-full min-w-0 flex-col ${variants[variant]} ${className}`}
     >
       {title && (
-        <h2 className="break-words text-lg font-bold text-gray-900 sm:text-xl">
+        <h2 className="vn-card-title break-words">
           {title}
         </h2>
       )}
 
       {description && (
-        <p className="mt-2 break-words text-sm text-gray-600 sm:text-base">
+        <p className="vn-description mt-2 text-sm">
           {description}
         </p>
       )}

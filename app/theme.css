@@ -1,75 +1,159 @@
 :root {
-  /* ===== LAYOUT ===== */
+  /* ===== PADRÃO DA HOME ===== */
 
-  --container-width: 1280px;
+  --cor-texto: #191815;
+  --cor-titulo: #7e4220;
+  --cor-primaria: #ea7805;
+  --cor-destaque: #f1b435;
+  --cor-fundo: #fff5ea;
+
+  --cor-superficie: #ffffff;
+  --cor-superficie-suave: #fffaf4;
+  --cor-texto-secundario: #756454;
+  --cor-borda: #e8d8c6;
+  --cor-borda-forte: #b4a08b;
+  --cor-selecao: #ffecd5;
+
+  --cor-sobre-primaria: #ffffff;
+  --cor-primaria-hover: #f18b23;
+  --cor-link: var(--cor-titulo);
+
+  /* ===== ESTADOS ===== */
+
+  --cor-erro: #b42318;
+  --cor-erro-hover: #8f1c13;
+  --cor-erro-fundo: #fff0ed;
+
+  --cor-sucesso: #24683c;
+  --cor-sucesso-fundo: #edf7ef;
+
+  --cor-info: #245e8a;
+  --cor-info-fundo: #eef5fc;
+
+  --cor-aviso: #76520b;
+  --cor-aviso-fundo: #fff3cc;
+
+  /* ===== EFEITOS ===== */
+
+  --cor-overlay: rgb(25 24 21 / 48%);
+  --cor-foco: rgb(234 120 5 / 20%);
+  --cor-scrollbar: #c8b7a4;
+
+  --sombra-card: 0 2px 8px rgb(126 66 32 / 8%);
+  --sombra-elevada: 0 12px 32px rgb(126 66 32 / 12%);
+
+  /* ===== BORDAS ===== */
+
+  --raio-pequeno: 6px;
+  --raio-campo: 10px;
+  --raio-card: 16px;
+  --raio-pill: 999px;
+
+  /* ===== ESPAÇAMENTOS ===== */
+
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-5: 24px;
+  --espaco-6: 32px;
+  --espaco-7: 48px;
+
+  /* ===== TIPOGRAFIA ===== */
+
+  --fonte-familia: Arial, Helvetica, sans-serif;
+
+  --fonte-xs: 0.75rem;
+  --fonte-sm: 0.875rem;
+  --fonte-base: 1rem;
+  --fonte-lg: 1.125rem;
+  --fonte-xl: 1.375rem;
+
+  --fonte-titulo: clamp(1.5rem, 2.2vw, 2rem);
+
+  /* ===== DIMENSÕES ===== */
+
+  --largura-container: 1440px;
+  --altura-campo: 48px;
+  --altura-botao: 44px;
+
+  --transicao: 160ms ease;
+
+  --z-header: 100;
+  --z-modal: 1000;
+
+  /* ===== LAYOUT EXISTENTE ===== */
+
+  --container-width: var(--largura-container);
   --container-height: 1024px;
 
   /* ===== BRAND COLORS ===== */
 
-  --brand-black: #191815;
-  --brand-brown: #7e4220;
-  --brand-orange: #ea7805;
-  --brand-yellow: #f1b435;
-  --brand-cream: #fff5ea;
+  --brand-black: var(--cor-texto);
+  --brand-brown: var(--cor-titulo);
+  --brand-orange: var(--cor-primaria);
+  --brand-yellow: var(--cor-destaque);
+  --brand-cream: var(--cor-fundo);
 
   /* ===== PRIMARY — LARANJA ===== */
 
-  --primary: #ea7805;
-  --primary-light: #f1b435;
-  --primary-dark: #7e4220;
+  --primary: var(--cor-primaria);
+  --primary-light: var(--cor-destaque);
+  --primary-dark: var(--cor-titulo);
 
-  --primary-10: rgba(234, 120, 5, 0.1);
-  --primary-20: rgba(234, 120, 5, 0.2);
+  --primary-10: rgb(234 120 5 / 10%);
+  --primary-20: rgb(234 120 5 / 20%);
 
-  --primary-hover: #d66c04;
+  --primary-hover: var(--cor-primaria-hover);
   --primary-active: #b85c03;
 
-  /* Texto recomendado sobre laranja e amarelo */
-  --text-on-primary: #191815;
+  --text-on-primary: var(--cor-sobre-primaria);
+  --text-on-warning: var(--cor-texto);
 
   /* ===== SECONDARY — MARROM ===== */
 
-  --secondary: #7e4220;
+  --secondary: var(--cor-titulo);
   --secondary-light: #a85a2c;
-  --secondary-dark: #191815;
+  --secondary-dark: var(--cor-texto);
 
-  --secondary-10: rgba(126, 66, 32, 0.1);
-  --secondary-20: rgba(126, 66, 32, 0.2);
+  --secondary-10: rgb(126 66 32 / 10%);
+  --secondary-20: rgb(126 66 32 / 20%);
 
   --secondary-hover: #68361a;
   --secondary-active: #4f2813;
 
   /* ===== SEMANTIC COLORS ===== */
 
-  --success: #22c55e;
-  --success-dark: #15803d;
-  --success-10: rgba(34, 197, 94, 0.1);
+  --success: var(--cor-sucesso);
+  --success-dark: var(--cor-sucesso);
+  --success-10: var(--cor-sucesso-fundo);
 
-  --warning: #f1b435;
-  --warning-dark: #7e4220;
-  --warning-10: rgba(241, 180, 53, 0.15);
+  --warning: var(--cor-destaque);
+  --warning-dark: var(--cor-aviso);
+  --warning-10: var(--cor-aviso-fundo);
 
-  --error: #ef4444;
-  --error-dark: #dc2626;
-  --error-10: rgba(239, 68, 68, 0.1);
+  --error: var(--cor-erro);
+  --error-dark: var(--cor-erro-hover);
+  --error-10: var(--cor-erro-fundo);
 
-  --info: #3b82f6;
-  --info-dark: #1d4ed8;
-  --info-10: rgba(59, 130, 246, 0.1);
+  --info: var(--cor-info);
+  --info-dark: var(--cor-info);
+  --info-10: var(--cor-info-fundo);
 
   /* ===== LIGHT UI COLORS ===== */
 
-  --surface: #fff5ea;
-  --surface-muted: #f9eadb;
-  --surface-soft: #fffaf5;
-  --surface-hover: rgba(241, 180, 53, 0.16);
-  --surface-active: rgba(234, 120, 5, 0.18);
+  --surface: var(--cor-superficie);
+  --surface-muted: var(--cor-superficie-suave);
+  --surface-soft: var(--cor-superficie-suave);
+
+  --surface-hover: var(--cor-selecao);
+  --surface-active: var(--primary-20);
 
   /* ===== DARK UI COLORS ===== */
 
-  --dark-surface: #191815;
+  --dark-surface: var(--cor-texto);
   --dark-surface-hover: #2d211b;
-  --dark-surface-active: #7e4220;
+  --dark-surface-active: var(--cor-titulo);
 
   /* ===== LEGACY COLORS ===== */
 
@@ -77,63 +161,86 @@
   --second-hover: var(--surface-hover);
   --second-active: var(--surface-active);
 
-  --third: #fff5ea;
-  --third-hover: #f9eadb;
-  --third-active: #f2dcc8;
+  --third: var(--surface-soft);
+  --third-hover: var(--cor-fundo);
+  --third-active: var(--cor-selecao);
 
-  --forth: #ea7805;
-  --forth-hover: #d66c04;
-  --forth-active: #b85c03;
-  --forth-10: rgba(234, 120, 5, 0.1);
-  --forth-10-hover: rgba(234, 120, 5, 0.2);
+  --forth: var(--primary);
+  --forth-hover: var(--primary-hover);
+  --forth-active: var(--primary-active);
+  --forth-10: var(--primary-10);
+  --forth-10-hover: var(--primary-20);
 
-  --fifth: #7e4220;
-  --fifth-hover: #68361a;
-  --fifth-active: #4f2813;
+  --fifth: var(--secondary);
+  --fifth-hover: var(--secondary-hover);
+  --fifth-active: var(--secondary-active);
 
-  --sixth: #6f625a;
+  --sixth: var(--cor-texto-secundario);
   --sixth-hover: #584d46;
   --sixth-active: #403833;
 
-  --seventh: #ef4444;
-  --seventh-hover: #dc2626;
-  --seventh-active: #b91c1c;
+  --seventh: var(--error);
+  --seventh-hover: var(--error-dark);
+  --seventh-active: var(--error-dark);
 
   /* ===== NEUTRAL SCALE ===== */
 
-  --gray-50: #fffaf5;
-  --gray-100: #fff5ea;
-  --gray-200: #f2dcc8;
-  --gray-300: #d8baa2;
-  --gray-400: #ad8d76;
-  --gray-500: #806b5d;
+  --gray-50: var(--cor-superficie-suave);
+  --gray-100: var(--cor-fundo);
+  --gray-200: var(--cor-borda);
+  --gray-300: var(--cor-borda-forte);
+  --gray-400: #a38d78;
+  --gray-500: var(--cor-texto-secundario);
   --gray-600: #624f44;
   --gray-700: #49382f;
-  --gray-800: #2d211b;
-  --gray-900: #191815;
+  --gray-800: var(--dark-surface-hover);
+  --gray-900: var(--cor-texto);
 
   /* ===== BACKGROUNDS ===== */
 
-  --bg-primary: #fff5ea;
-  --bg-secondary: #f9eadb;
-  --bg-dark: #191815;
+  --bg-primary: var(--cor-fundo);
+  --bg-secondary: var(--cor-superficie-suave);
+  --bg-dark: var(--cor-texto);
 
   /* ===== TEXT COLORS ===== */
 
-  --text-primary: #191815;
-  --text-secondary: #7e4220;
-  --text-disabled: #ad8d76;
-  --text-white: #fff5ea;
-  --text-dark: #191815;
+  --text-primary: var(--cor-texto);
+  --text-secondary: var(--cor-titulo);
+  --text-muted: var(--cor-texto-secundario);
+  --text-disabled: var(--cor-borda-forte);
+  --text-white: var(--cor-sobre-primaria);
+  --text-dark: var(--cor-texto);
 
   /* ===== BORDERS ===== */
 
-  --border-light: #f2dcc8;
-  --border-medium: #d8baa2;
-  --border-dark: #7e4220;
-  --border-primary: #ea7805;
+  --border-light: var(--cor-borda);
+  --border-medium: var(--cor-borda-forte);
+  --border-dark: var(--cor-titulo);
+  --border-primary: var(--cor-primaria);
 
-  /* ===== FOCUS ===== */
+  /* ===== FOCUS, SHADOWS E RADIUS ===== */
 
-  --focus-ring: rgba(234, 120, 5, 0.3);
+  --focus-ring: var(--cor-foco);
+
+  --shadow-card: var(--sombra-card);
+  --shadow-elevated: var(--sombra-elevada);
+
+  --radius-small: var(--raio-pequeno);
+  --radius-input: var(--raio-campo);
+  --radius-card: var(--raio-card);
+  --radius-pill: var(--raio-pill);
+
+  font-family: var(--fonte-familia);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transicao: 0s;
+  }
 }

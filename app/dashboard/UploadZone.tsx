@@ -1,69 +1,174 @@
 "use client";
 
-import { CloudUpload } from "lucide-react";
+import { useRef, useState } from "react";
+import type { DragEvent } from "react";
+import { CloudUpload, FileText, X } from "lucide-react";
+
 import { Button } from "../components/ui/Button";
-import { useState } from "react";
 import { useCVStore } from "../store/useCVStore";
 
 export function UploadZone() {
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [error, setError] = useState("");
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dragCounter = useRef(0);
+
   const uploadCV = useCVStore((state) => state.uploadCV);
+
+  function selectFile(chosen: File | null) {
+    if (!chosen) return;
+
+    const message = !/\.(pdf|docx)$/i.test(chosen.name)
+      ? "Selecione um arquivo PDF ou DOCX."
+      : chosen.size > 5 * 1024 * 1024
+        ? "O arquivo deve ter no máximo 5 MB."
+        : "";
+
+    setError(message);
+    setFile(message ? null : chosen);
+    setFileName(message ? "" : chosen.name);
+
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  }
+
+  function removeFile() {
+    setFile(null);
+    setFileName("");
+    setError("");
+
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  }
+
+  function handleDragEnter(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!Array.from(event.dataTransfer.types).includes("Files")) {
+      return;
+    }
+
+    dragCounter.current += 1;
+    setIsDragging(true);
+  }
+
+  function handleDragOver(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.dataTransfer.dropEffect = "copy";
+  }
+
+  function handleDragLeave(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    dragCounter.current = Math.max(0, dragCounter.current - 1);
+
+    if (dragCounter.current === 0) {
+      setIsDragging(false);
+    }
+  }
+
+  function handleDrop(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    dragCounter.current = 0;
+    setIsDragging(false);
+
+    selectFile(event.dataTransfer.files[0] ?? null);
+  }
 
   async function handleUpload() {
     if (!file) return;
-
     await uploadCV(file);
   }
 
   return (
-    <div className="flex min-h-[260px] w-full flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed border-primary bg-white px-4 py-6 text-center sm:px-8">
-
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-        <CloudUpload
-          className="h-8 w-8 text-primary"
-          strokeWidth={2.3}
-        />
+    <div
+      onDragEnter={handleDragEnter}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      className={`vn-upload ${isDragging ? "vn-upload--dragging" : ""}`}
+    >
+      <div className="vn-upload-icon" aria-hidden="true">
+        <CloudUpload size={32} strokeWidth={2.3} />
       </div>
 
-      <h3 className="text-base font-bold leading-tight text-gray-900 sm:text-lg">
-        Arraste seu currículo ou
-        <br />
-        clique para enviar
+      <h3 className="vn-upload-title">
+        {isDragging ? "Solte seu currículo aqui" : "Arraste seu currículo para cá"}
       </h3>
 
-      <div>
-        <p className="text-xs text-gray-500 sm:text-sm">
-          Formatos aceitos: PDF, DOCX
+      <div className="vn-upload-hints">
+        <p className="vn-muted">
+          {file
+            ? "Para trocar, arraste outro arquivo para esta área"
+            : "Ou use o botão Escolher arquivo"}
         </p>
 
-        <p className="text-xs text-gray-500 sm:text-sm">
-          Tamanho máximo: 5MB
-        </p>
+        <p className="vn-muted">Formatos aceitos: PDF, DOCX</p>
+
+        <p className="vn-muted">Tamanho máximo: 5MB</p>
       </div>
 
       <input
+        ref={inputRef}
         type="file"
-        onChange={(e) => {
-          const chosen = e.target.files?.[0] ?? null;
-          setFile(chosen);
-          setFileName(chosen?.name ?? "");
+        accept=".pdf,.docx"
+        aria-label="Selecionar currículo"
+        hidden
+        onChange={(event) => {
+          selectFile(event.target.files?.[0] ?? null);
         }}
-        className="max-w-full text-xs sm:text-sm"
       />
 
-      {fileName && (
-        <p className="text-sm font-medium text-green-600">
-          Selecionado: {fileName}
+      {error && (
+        <p role="alert" className="vn-field-error">
+          {error}
         </p>
       )}
 
+      {file && (
+        <div aria-live="polite" className="vn-file">
+          <div className="vn-file__icon" aria-hidden="true">
+            <FileText size={40} strokeWidth={1.7} />
+
+            <span className="vn-file__ext">
+              {file.name.toLowerCase().endsWith(".pdf") ? "PDF" : "DOCX"}
+            </span>
+          </div>
+
+          <div className="vn-file__info">
+            <p className="vn-note">Arquivo selecionado</p>
+
+            <p className="vn-file__name">{fileName}</p>
+          </div>
+
+          <button
+            type="button"
+            className="vn-file__remove"
+            aria-label={`Remover arquivo ${fileName}`}
+            title="Remover arquivo"
+            onClick={removeFile}
+          >
+            <X size={20} strokeWidth={2.2} aria-hidden="true" />
+          </button>
+        </div>
+      )}
+
       <Button
-        variant="primary"
+        variant={file ? "primary" : "secondary"}
         size="sm"
-        onClick={handleUpload}
+        onClick={file ? handleUpload : () => inputRef.current?.click()}
       >
-        Enviar Currículo
+        {file ? "Enviar arquivo" : "Escolher arquivo"}
       </Button>
     </div>
   );

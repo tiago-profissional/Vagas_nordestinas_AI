@@ -1,0 +1,72 @@
+/* =====================================================================
+   layout.css  |  Estrutura global: sidebar do dashboard (prefixo .vn-)
+   Importar no app/layout.tsx, DEPOIS do globals.css e do ui.css:
+     import "./globals.css";
+     import "./css/ui.css";
+     import "./css/layout.css";
+   ===================================================================== */
+
+@layer components {
+  /* Sidebar ---------------------------------------------------------- */
+  .vn-sidebar {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    background: var(--bg-primary);
+    border-right: 1px solid var(--border-light);
+  }
+
+  .vn-sidebar__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-3);
+    padding: var(--espaco-5) var(--espaco-4);
+  }
+
+  /* Item do menu (link ou botão) */
+  .vn-nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-3);
+    width: 100%;
+    min-height: var(--altura-botao);
+    padding: var(--espaco-2) var(--espaco-4);
+    color: var(--secondary);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--raio-pill);
+    font-size: var(--fonte-sm);
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    transition:
+      background-color var(--transicao),
+      border-color var(--transicao),
+      color var(--transicao);
+  }
+
+  .vn-nav-item:hover {
+    background: var(--cor-selecao);
+    border-color: var(--secondary);
+  }
+
+  /* Página atual: pílula laranja */
+  .vn-nav-item--active {
+    color: var(--text-on-primary);
+    background: var(--primary);
+  }
+
+  .vn-nav-item--active:hover {
+    background: var(--primary-hover);
+    border-color: transparent;
+  }
+
+  .vn-nav-item__icon {
+    flex-shrink: 0;
+  }
+
+  .vn-nav-item__label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}

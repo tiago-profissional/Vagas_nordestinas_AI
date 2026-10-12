@@ -3,82 +3,84 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import {
+  BriefcaseBusiness,
+  FileText,
+  GitCompareArrows,
+  LogOut,
+  Plus,
+  UserRound,
+} from "lucide-react";
+
 const menuItems = [
   {
     label: "Meu Currículo",
     href: "/dashboard",
-    icon: "📄",
+    icon: FileText,
+  },
+  {
+    label: "Comparar com vaga",
+    href: "/dashboard/compare",
+    icon: GitCompareArrows,
   },
   {
     label: "Minhas Vagas",
     href: "https://vagasnordestinas.com/dashboard",
-    icon: "💼",
+    icon: BriefcaseBusiness,
   },
   {
     label: "Criar Nova Vaga",
     href: "https://vagasnordestinas.com/create-job",
-    icon: "➕",
+    icon: Plus,
   },
   {
     label: "Perfil",
     href: "/dashboard/profile",
-    icon: "👤",
+    icon: UserRound,
   },
   {
     label: "Sair",
     href: "https://vagasnordestinas.com/",
-    icon: "↪️",
+    icon: LogOut,
   },
 ];
+
+// "/dashboard" só fica ativo na rota exata; os demais também nas sub-rotas.
+function isRouteActive(pathname: string, href: string) {
+  if (href === "/dashboard") return pathname === href;
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <nav className="h-full w-full overflow-y-auto bg-[var(--surface-muted)] shadow-sm">
-      <div className="grid grid-cols-1 gap-2 px-4 pt-6">
+    <nav aria-label="Menu principal" className="vn-sidebar">
+      <div className="vn-sidebar__list">
         {menuItems.map((item) => {
           const isExternal = item.href.startsWith("http");
-          const isActive = !isExternal && pathname === item.href;
+          const isActive = !isExternal && isRouteActive(pathname, item.href);
+          const Icon = item.icon;
 
-          const itemClasses = `
-            group
-            grid
-            h-[52px]
-            grid-cols-[40px_1fr]
-            items-center
-            rounded-xl
-            px-3
-            transition-all
-            duration-300
-            ease-in-out
-            hover:scale-[1.02]
-            ${
-              isActive
-                ? "bg-[var(--primary)] text-[var(--text-on-primary)] shadow-lg"
-                : "text-[var(--text-primary)] hover:bg-[var(--primary-10)] hover:text-[var(--primary-dark)] hover:shadow-md"
-            }
-          `;
+          const className = `vn-nav-item ${isActive ? "vn-nav-item--active" : ""}`;
 
           const content = (
             <>
-              <span className="text-center text-xl transition-transform duration-300 group-hover:scale-110">
-                {item.icon}
-              </span>
+              <Icon
+                aria-hidden="true"
+                size={20}
+                strokeWidth={1.8}
+                className="vn-nav-item__icon"
+              />
 
-              <span className="whitespace-nowrap text-[15px] font-bold">
-                {item.label}
-              </span>
+              <span className="vn-nav-item__label">{item.label}</span>
             </>
           );
 
           if (isExternal) {
             return (
-              <a
-                key={item.href}
-                href={item.href}
-                className={itemClasses}
-              >
+              <a key={item.href} href={item.href} className={className}>
                 {content}
               </a>
             );
@@ -88,7 +90,8 @@ export function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={itemClasses}
+              aria-current={isActive ? "page" : undefined}
+              className={className}
             >
               {content}
             </Link>

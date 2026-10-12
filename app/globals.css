@@ -1,13 +1,18 @@
 @import "tailwindcss";
+@import "./theme.css";
+ 
+@import "./css/tokens.css";
 
-/* =========================================================
-   TAILWIND V4 — CONEXÃO COM O THEME.CSS
-========================================================= */
+/* ===== TAILWIND V4 ===== */
 
 @theme inline {
+  --font-sans: var(--fonte-familia);
+
   --color-primary: var(--primary);
   --color-primary-light: var(--primary-light);
   --color-primary-dark: var(--primary-dark);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
 
   --color-secondary: var(--secondary);
   --color-secondary-light: var(--secondary-light);
@@ -29,157 +34,532 @@
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-text-disabled: var(--text-disabled);
+  --color-text-muted: var(--text-muted);
+  --color-text-white: var(--text-white);
+  --color-text-on-primary: var(--text-on-primary);
 
   --color-border-light: var(--border-light);
   --color-border-medium: var(--border-medium);
   --color-border-dark: var(--border-dark);
+  --color-border-primary: var(--border-primary);
+
+  --color-primary-10: var(--primary-10);
+  --color-primary-20: var(--primary-20);
+
+  --color-success-soft: var(--success-10);
+  --color-warning-soft: var(--warning-10);
+  --color-error-soft: var(--error-10);
+  --color-info-soft: var(--info-10);
+
+  --color-second: var(--second);
+  --color-third: var(--third);
+  --color-forth: var(--forth);
+  --color-forth-hover: var(--forth-hover);
+  --color-fifth: var(--fifth);
+  --color-sixth: var(--sixth);
+  --color-seventh: var(--seventh);
+
+  --color-gray-50: var(--gray-50);
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+
+  --radius-field: var(--raio-campo);
+  --radius-card: var(--raio-card);
+
+  --shadow-card: var(--sombra-card);
+  --shadow-elevated: var(--sombra-elevada);
 }
 
-/* =========================================================
-   RESET
-========================================================= */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/* ===== BASE ===== */
 
 @layer base {
-  * {
-    margin: 0;
-    padding: 0;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+  }
+
+  html {
+    min-width: 320px;
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    font-family: var(--fonte-familia);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  a {
+    color: var(--cor-link);
+    text-decoration: none;
+    text-underline-offset: 3px;
+  }
+
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  input,
+  select,
+  textarea {
+    color: var(--cor-texto);
+  }
+
+  select {
+    cursor: pointer;
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    accent-color: var(--cor-titulo);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  :where(a, button, input, textarea, select):focus-visible {
+    outline: 2px solid var(--cor-titulo);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    color: var(--brand-black);
+    background: var(--brand-yellow);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--surface-muted);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--cor-scrollbar);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
-/* =========================================================
-   HTML E BODY
-========================================================= */
+/* ===== COMPONENTES ===== */
 
-html,
-body {
-  width: 100%;
-  min-height: 100%;
-}
+@layer components {
+  .vn-card-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-3);
+    margin-bottom: var(--espaco-5);
+  }
 
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
+  .vn-card-title {
+    color: var(--cor-titulo);
+    font-size: var(--fonte-lg);
+    font-weight: 800;
+    line-height: 1.3;
+  }
 
-body {
-  min-height: 100vh;
-  overflow-x: hidden;
-  color: var(--text-primary);
-  background: var(--bg-primary);
+  .vn-card-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    color: var(--secondary);
+    background: var(--primary-10);
+    border-radius: var(--raio-campo);
+  }
 
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  .vn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    min-height: var(--altura-botao);
+    color: var(--secondary);
+    font-size: var(--fonte-sm);
+    font-weight: 600;
+    text-align: left;
+    transition: color var(--transicao);
+  }
 
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
+  .vn-link:hover:not(:disabled) {
+    color: var(--primary);
+    text-decoration: underline;
+  }
 
-/* =========================================================
-   APP
-========================================================= */
+  .vn-link:disabled {
+    color: var(--text-disabled);
+    cursor: not-allowed;
+  }
 
-#__next {
-  min-height: 100vh;
-}
+  .vn-tag {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 6px 12px;
+    color: var(--secondary);
+    background: var(--cor-selecao);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-pill);
+    font-size: var(--fonte-sm);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
 
-.layout-container {
-  position: relative;
-  width: 100%;
-  max-width: var(--container-width);
-  min-height: 100vh;
-  margin: 0 auto;
-  background: var(--bg-primary);
-}
+  #root,
+  .page-wrapper {
+    width: 100%;
+    min-height: 100vh;
+  }
 
-/* =========================================================
-   MÍDIA
-========================================================= */
+  .container {
+    width: 100%;
+    max-width: var(--largura-container);
+    margin-inline: auto;
+    padding-inline: var(--espaco-6);
+  }
 
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
+  .layout-container {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-width);
+    min-height: 100vh;
+    margin-inline: auto;
+    background: var(--bg-primary);
+  }
 
-/* =========================================================
-   FORMULÁRIOS
-========================================================= */
+  .vn-page {
+    width: 100%;
+    max-width: var(--container-width);
+    margin-inline: auto;
+    padding: var(--espaco-6);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+  }
 
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
+  .vn-title {
+    color: var(--text-secondary);
+    font-size: var(--fonte-titulo);
+    font-weight: 800;
+    line-height: 1.2;
+  }
 
-/* =========================================================
-   LINKS
-========================================================= */
+  .vn-description {
+    color: var(--sixth);
+    line-height: 1.6;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  .vn-card {
+    padding: var(--espaco-5);
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--raio-card);
+    box-shadow: var(--sombra-card);
+  }
 
-/* =========================================================
-   BOTÕES
-========================================================= */
+  /* ===== BOTÕES ===== */
 
-button {
-  border: none;
-  background: none;
-  cursor: pointer;
-}
+  .vn-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: var(--altura-botao);
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: var(--raio-campo);
+    font-size: var(--fonte-base);
+    font-weight: 700;
+    line-height: 1.4;
+    transition:
+      background-color var(--transicao),
+      border-color var(--transicao),
+      color var(--transicao);
+  }
 
-/* =========================================================
-   SCROLLBAR
-========================================================= */
+  .vn-button--primary {
+    color: var(--text-on-primary);
+    background: var(--primary);
+    border-color: var(--primary);
+  }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
+  .vn-button--primary:hover:not(:disabled) {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
 
-::-webkit-scrollbar-track {
-  background: var(--surface-muted);
-}
+  .vn-button--primary:active:not(:disabled) {
+    background: var(--primary-active);
+    border-color: var(--primary-active);
+  }
 
-::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 999px;
-}
+  .vn-button--outline {
+    color: var(--secondary);
+    background: transparent;
+    border-color: var(--secondary);
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-hover);
-}
+  .vn-button--outline:hover:not(:disabled) {
+    background: var(--secondary-10);
+  }
 
-.small-scrollbar::-webkit-scrollbar {
-  height: 5px;
-}
+  .vn-button:disabled,
+  .vn-pill:disabled {
+    opacity: 0.55;
+  }
 
-.small-scrollbar::-webkit-scrollbar-track {
-  background: var(--surface-muted);
-  border-radius: 999px;
-}
+  /* ===== FILTROS ===== */
 
-.small-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 999px;
-}
+  .vn-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 8px 16px;
+    color: var(--secondary);
+    background: transparent;
+    border: 1px solid var(--secondary);
+    border-radius: var(--raio-pill);
+    font-size: var(--fonte-sm);
+    font-weight: 600;
+    line-height: 1.4;
+  }
 
-.small-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) var(--surface-muted);
+  .vn-pill:hover:not(:disabled) {
+    background: var(--secondary-10);
+  }
+
+  .vn-pill[aria-pressed="true"] {
+    color: var(--text-on-primary);
+    background: var(--primary);
+    border-color: var(--primary);
+  }
+
+  .vn-pill[aria-pressed="true"]:hover:not(:disabled) {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
+
+  /* ===== CAMPOS ===== */
+
+  .vn-input {
+    width: 100%;
+    min-height: var(--altura-campo);
+    padding: 12px 16px;
+    color: var(--text-primary);
+    background: var(--surface);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--raio-campo);
+  }
+
+  .vn-input::placeholder {
+    color: var(--gray-500);
+    opacity: 1;
+  }
+
+  .vn-input:focus {
+    border-color: var(--primary);
+  }
+
+  /* ===== UPLOAD ===== */
+
+  .vn-upload {
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+    padding: clamp(24px, 5vw, 40px);
+    text-align: center;
+    background: var(--surface-soft);
+    border: 2px dashed var(--primary);
+    border-radius: var(--raio-card);
+  }
+
+  .vn-upload-icon {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    color: var(--primary);
+    background: var(--primary-10);
+    border-radius: 50%;
+  }
+
+  .vn-upload-title {
+    max-width: 360px;
+    color: var(--text-primary);
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+
+  .vn-file-input {
+    width: 100%;
+    max-width: 420px;
+    color: var(--sixth);
+    font-size: 14px;
+  }
+
+  .vn-file-input::file-selector-button {
+    margin-right: 12px;
+    padding: 10px 14px;
+    color: var(--secondary);
+    background: var(--surface);
+    border: 1px solid var(--secondary);
+    border-radius: var(--raio-campo);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .vn-file-input::file-selector-button:hover {
+    background: var(--secondary-10);
+  }
+
+  .small-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--surface-muted);
+  }
+
+  .small-scrollbar::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  /* ===== NAVBAR ===== */
+
+  .navbar {
+    width: 100%;
+    padding-block: var(--espaco-4);
+    background: var(--cor-superficie-suave);
+    border-bottom: 1px solid var(--cor-borda);
+  }
+
+  .navbar-container {
+    width: 100%;
+    max-width: var(--largura-container);
+    margin-inline: auto;
+    padding-inline: var(--espaco-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-5);
+    flex-wrap: wrap;
+  }
+
+  .navbar-left,
+  .navbar-center,
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-4);
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+
+  .navbar .navbar-logo {
+    color: var(--cor-titulo);
+    font-size: var(--fonte-xl);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .navbar .nav-link {
+    color: var(--cor-titulo);
+    font-size: var(--fonte-sm);
+    font-weight: 600;
+    text-decoration: none;
+    padding-block: var(--espaco-2);
+  }
+
+  .navbar .nav-link:hover,
+  .navbar .nav-link.active {
+    text-decoration: underline;
+  }
+
+  .navbar .nav-icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: var(--altura-botao);
+    height: var(--altura-botao);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-campo);
+    color: var(--cor-titulo);
+    background: var(--cor-superficie);
+  }
+
+  .navbar .nav-text {
+    color: var(--cor-texto-secundario);
+    font-size: var(--fonte-sm);
+  }
+
+  @media (max-width: 768px) {
+    .container,
+    .navbar-container {
+      padding-inline: var(--espaco-4);
+    }
+
+    .vn-page {
+      padding: var(--espaco-4);
+    }
+
+    .navbar-container {
+      gap: var(--espaco-3);
+    }
+
+    .navbar-center {
+      order: 3;
+      width: 100%;
+    }
+  }
 }

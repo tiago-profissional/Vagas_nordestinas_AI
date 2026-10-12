@@ -22,74 +22,46 @@ export function ResumeSummaryCard({
   }`;
 
   return (
-    <Card className="h-auto min-h-0 rounded-2xl border-[var(--border-medium)] bg-[var(--surface)] px-5 py-5 lg:px-6 lg:py-5">
-      <div className="flex flex-col gap-6 xl:flex-row xl:items-center xl:justify-between">
-        <div className="flex items-center gap-4">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-[var(--brand-yellow)] bg-[var(--primary-10)] text-2xl">
+    <Card className="cmp-card">
+      <div className="cmp-summary__top">
+        <div className="cmp-summary__identity">
+          <div className="vn-card-icon vn-card-icon--round" aria-hidden="true">
             📄
           </div>
 
           <div>
-            <h2 className="text-lg font-bold text-[var(--text-primary)]">
-              Seu currículo atual
-            </h2>
+            <h2 className="vn-card-title">Seu currículo atual</h2>
 
-            <span className="mt-2 inline-flex rounded-md bg-emerald-100 px-3 py-1 text-sm font-medium text-emerald-700">
+            <span className="vn-badge cmp-summary__badge">
               Currículo pronto para comparação
             </span>
           </div>
         </div>
 
-        <div className="grid flex-1 grid-cols-1 gap-5 sm:grid-cols-3 xl:max-w-2xl">
-          <ResumeMetric
-            icon="🧩"
-            label="Skills detectadas"
-            value={skillsText}
-          />
-
-          <ResumeMetric
-            icon="⏱️"
-            label="Experiência total"
-            value={experience}
-          />
-
-          <ResumeMetric
-            icon="📍"
-            label="Localização"
-            value={location}
-          />
-        </div>
-
-        <button
-          type="button"
-          className="rounded-xl border border-[var(--border-dark)] px-5 py-3 text-sm font-semibold text-[var(--primary-dark)] transition hover:bg-[var(--primary-10)] hover:text-[var(--primary)]"
-        >
+        <button type="button" className="vn-button vn-button--outline">
           Ver detalhes do currículo
         </button>
+      </div>
+
+      <div className="cmp-summary__metrics">
+        <ResumeMetric icon="🧩" label="Skills detectadas" value={skillsText} />
+        <ResumeMetric icon="⏱️" label="Experiência total" value={experience} />
+        <ResumeMetric icon="📍" label="Localização" value={location} />
       </div>
     </Card>
   );
 }
 
-function ResumeMetric({
-  icon,
-  label,
-  value,
-}: ResumeMetricProps) {
+function ResumeMetric({ icon, label, value }: ResumeMetricProps) {
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--surface-muted)]">
+    <div className="cmp-metric">
+      <div className="vn-card-icon vn-card-icon--sm" aria-hidden="true">
         {icon}
       </div>
 
       <div>
-        <p className="text-sm font-medium text-[var(--text-primary)]">
-          {label}
-        </p>
-
-        <p className="text-sm text-[var(--text-secondary)]">
-          {value}
-        </p>
+        <p className="cmp-metric__label">{label}</p>
+        <p className="cmp-metric__value">{value}</p>
       </div>
     </div>
   );
