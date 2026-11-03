@@ -25,12 +25,12 @@ const menuItems = [
   },
   {
     label: "Minhas Vagas",
-    href: "https://vagasnordestinas.com/dashboard",
+    href: "https://vagasnordestinas.free.je/dashboard",
     icon: BriefcaseBusiness,
   },
   {
     label: "Criar Nova Vaga",
-    href: "https://vagasnordestinas.com/create-job",
+    href: "https://vagasnordestinas.free.je/create-job",
     icon: Plus,
   },
   {
@@ -40,7 +40,7 @@ const menuItems = [
   },
   {
     label: "Sair",
-    href: "https://vagasnordestinas.com/",
+    href: "https://vagasnordestinas.free.je/",
     icon: LogOut,
   },
 ];

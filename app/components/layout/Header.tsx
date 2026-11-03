@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 import "@/app/css/header.css";
 
-const SITE_URL = "https://vagasnordestinas.com";
+const SITE_URL = "https://vagasnordestinas.free.je";
 
 type HeaderProps = {
   userName?: string;
