@@ -109,7 +109,7 @@ export default function Header({
             )}
 
             <Link
-              href="/dashboard/profile"
+              href="/profile"
               className="vne-header__mobile-login"
               onClick={closeMenu}
             >
@@ -128,7 +128,7 @@ export default function Header({
           </a>
 
           <Link
-            href="/dashboard/profile"
+            href="/profile"
             className="profile-icon"
             aria-label={`Abrir perfil de ${userName}`}
             title={userName}
