@@ -234,8 +234,8 @@ export default function Header({
               </button>
             )}
 
-            <Link
-              href="/profile"
+            <a
+              href={`${SITE_URL}/profile`}
               className="vne-header__mobile-login"
               onClick={closeMenu}
             >
@@ -250,7 +250,7 @@ export default function Header({
                 )}
               </span>
               <span>{profile ? displayName : "Meu perfil"}</span>
-            </Link>
+            </a>
           </div>
         </nav>
 
@@ -263,15 +263,15 @@ export default function Header({
             <span aria-hidden="true">⌕</span>
           </a>
 
-          <Link
-            href="/profile"
+          <a
+            href={`${SITE_URL}/profile`}
             className="profile-icon"
             aria-label={`Abrir perfil de ${displayName}`}
             title={profile?.email ? `${displayName} — ${profile.email}` : displayName}
             style={showPhoto ? { overflow: "hidden", padding: 0 } : undefined}
           >
             {profileContent}
-          </Link>
+          </a>
 
           {profile && (
             <span className="vne-header__user-name">{firstName}</span>

@@ -27,7 +27,7 @@ const menuItems = [
     label: "Comparar com vaga",
     href: "/dashboard/compare",
     icon: GitCompareArrows,
-    status: "Em desenvolvimento",
+    status: "Em produção",
   },
   {
     label: "Minhas Vagas",
