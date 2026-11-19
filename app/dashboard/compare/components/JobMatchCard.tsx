@@ -1,10 +1,10 @@
 "use client";
 
-import type { JobMatch } from "../types";
+import type { RankedJob } from "../data/types";
 
 type JobMatchCardProps = {
-  job: JobMatch;
-  onCompare: (job: JobMatch) => void;
+  job: RankedJob;
+  onCompare: (job: RankedJob) => void;
 };
 
 function getMatchLabel(score: number): string {
@@ -17,43 +17,46 @@ function getMatchLabel(score: number): string {
 }
 
 export function JobMatchCard({ job, onCompare }: JobMatchCardProps) {
+  const { job: details, score } = job;
+  const location = [details.city, details.state].filter(Boolean).join(", ");
+
   return (
     <article className="vn-card cmp-job">
       <header>
-        <h3 className="vn-card-title">{job.title}</h3>
-        <p className="cmp-job__company">{job.company}</p>
+        <h3 className="vn-card-title">{details.title}</h3>
+        <p className="cmp-job__company">{details.company}</p>
       </header>
 
       <div className="cmp-job__score">
         <div className="cmp-job__score-row">
-          <p className="vn-score">{job.score}%</p>
-          <p className="cmp-job__score-label">{getMatchLabel(job.score)}</p>
+          <p className="vn-score">{score}%</p>
+          <p className="cmp-job__score-label">{getMatchLabel(score)}</p>
         </div>
 
         <div
           className="vn-bar vn-bar--sm"
           role="progressbar"
-          aria-valuenow={job.score}
+          aria-valuenow={score}
           aria-valuemin={0}
           aria-valuemax={100}
           aria-label="Compatibilidade com o seu currículo"
         >
-          <span style={{ width: `${job.score}%` }} />
+          <span style={{ width: `${score}%` }} />
         </div>
       </div>
 
       <div className="cmp-job__meta">
-        <p>📍 {job.location}</p>
-        <p>💼 {job.modality} · {job.seniority}</p>
+        <p>📍 {location || "Local não informado"}</p>
+        <p>💼 {details.mode} · {details.seniority}</p>
       </div>
 
-      <p className="cmp-job__description">{job.description}</p>
+      <p className="cmp-job__description">{details.description}</p>
 
       <section className="cmp-job__skills">
         <h4 className="cmp-job__skills-title">Habilidades necessárias</h4>
 
         <div className="cmp-job__chips">
-          {job.skills.map((skill) => (
+          {details.skills.map((skill) => (
             <span key={skill} className="vn-tag vn-tag--soft">
               {skill}
             </span>

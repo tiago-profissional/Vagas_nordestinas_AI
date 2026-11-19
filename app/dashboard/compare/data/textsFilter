@@ -1,0 +1,54 @@
+Entendi: você só fez o que fizemos hoje, e o visual da página já existia. Então, comparando com a sua tela e o plano, fica assim:
+
+✅ Já fez hoje (no filterJobs.ts)
+Imports: mockJobs e import type { JobMatch }
+Tipo JobFilters com campos opcionais (?)
+Função com parâmetros, tipo de retorno e destructuring
+Regras de localização, modalidade e nível
+⬜ Falta fazer, em ordem
+
+1. Terminar o filterJobs (parte 2 do passo 4)
+
+Busca por cargo ou palavra-chave (search)
+Skills (skills)
+Score mínimo (minScore)
+
+2. Adicionar os filtros que estão na tela e ainda não existem no código
+Sua página tem três filtros que o JobFilters não tem:
+
+Área profissional: precisa de um campo area nas vagas
+Tipo de contrato: precisa de um campo contractType (CLT, PJ...)
+Ordenar por (“Mais compatíveis”): esse não é filter, é .sort(), que organiza a lista pelo score
+
+Para os dois primeiros, você também precisa adicionar esses campos no tipo JobMatch e nas vagas do mockJobs.ts.
+
+3. Corrigir o erro do JobMatch
+O sublinhado vermelho no mockJobs.ts. Abra o types.ts e confira se ele exporta JobMatch.
+
+4. Melhorar os tipos com union types (aulas 40–41, 45)
+Trocar modality: string por "Remoto" | "Híbrido" | "Presencial", e o mesmo para o nível.
+
+5. Subtarefa 1: função de match (em lib/)
+Hoje os números 92%, 78%, 62% e 56% estão escritos à mão no mockJobs. A função de match vai calcular esse score comparando as skills do currículo com as da vaga, e devolver:
+
+score: a porcentagem
+matched: as skills que você tem
+missing: as skills que faltam
+
+Use a aula 55 para não dividir por zero quando a vaga não tiver skills.
+
+6. Testar com console.log
+Antes de ligar na tela, chame as duas funções e veja se o resultado faz sentido.
+
+7. Ligar tudo na page.tsx
+
+useState guarda os filtros escolhidos
+filterJobs(filters) filtra
+.map() desenha cada JobMatchCard
+“4 resultados” vira o .length da lista filtrada
+“Limpar filtros” volta os filtros para {}
+Também decidir
+O filterJobs.ts fica em data/ ou vai para lib/, como diz o plano?
+O jobs.ts (novo) substitui o mockJobs.ts, ou os dois vão existir?
+
+O próximo passo é o 1: colar a parte 2 do passo 4 (busca, skills e score) e me mandar o print.

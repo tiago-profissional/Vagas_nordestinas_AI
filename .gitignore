@@ -69,3 +69,10 @@ dist-ssr
 .vercel
 .env*.local
 >>>>>>> b80654ffc73c9cb89c6af9ed8c331ed33c7e67e1
+
+# Private keys
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519

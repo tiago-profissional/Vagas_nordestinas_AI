@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -9,20 +9,121 @@ import "@/app/css/header.css";
 
 const SITE_URL = "https://vagasnordestinas.free.je";
 
+// Mesmo backend e mesmo banco de dados do site principal.
+const API_URL = (
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"
+).replace(/\/$/, "");
+
+// Cookie criado pelo login do site principal (veja useCurrentUser.js).
+const SESSION_COOKIE = "vn_token";
+
 type HeaderProps = {
   userName?: string;
   userPhoto?: string | null;
   onMenuClick?: () => void;
 };
 
+type AccountProfile = {
+  name: string;
+  email: string;
+  avatarUrl: string | null;
+};
+
+function readSessionToken(): string | null {
+  const entry = document.cookie
+    .split("; ")
+    .find((item) => item.startsWith(`${SESSION_COOKIE}=`));
+
+  if (!entry) return null;
+
+  const value = entry.slice(SESSION_COOKIE.length + 1);
+
+  try {
+    return decodeURIComponent(value) || null;
+  } catch {
+    return null;
+  }
+}
+
+function clearSessionToken() {
+  document.cookie = `${SESSION_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax`;
+}
+
+function toAbsoluteUrl(url: string | null | undefined): string | null {
+  if (!url) return null;
+  if (/^(https?:|blob:|data:)/i.test(url)) return url;
+
+  return `${API_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 export default function Header({
-  userName = "Tiago",
+  userName,
   userPhoto,
   onMenuClick,
 }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [profile, setProfile] = useState<AccountProfile | null>(null);
+  const [photoFailed, setPhotoFailed] = useState(false);
+
   const pathname = usePathname() ?? "";
   const aiResumeActive = pathname.startsWith("/dashboard");
+
+  // Busca nome, e-mail e foto da conta logada, direto do banco de dados.
+  const loadProfile = useCallback(async () => {
+    const token = readSessionToken();
+
+    if (!token) {
+      setProfile(null);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/users/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: "no-store",
+      });
+
+      if (response.status === 401) {
+        clearSessionToken();
+        setProfile(null);
+        return;
+      }
+
+      if (!response.ok) return;
+
+      const json = await response.json();
+      const personal = json?.data?.personal_data;
+
+      if (!personal) return;
+
+      setProfile({
+        name: personal.name || "",
+        email: personal.email || "",
+        avatarUrl: toAbsoluteUrl(personal.avatar_url),
+      });
+      setPhotoFailed(false);
+    } catch {
+      // Backend desligado: mantém o que já estava na tela.
+    }
+  }, []);
+
+  useEffect(() => {
+    loadProfile();
+
+    // Ao voltar para esta aba (ex.: depois de editar o perfil), atualiza de novo.
+    window.addEventListener("focus", loadProfile);
+
+    return () => window.removeEventListener("focus", loadProfile);
+  }, [loadProfile]);
 
   function closeMenu() {
     setMenuOpen(false);
@@ -37,21 +138,40 @@ export default function Header({
     onMenuClick?.();
   }
 
-  const profileContent = userPhoto ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={userPhoto}
-      alt=""
-      style={{
-        width: "100%",
-        height: "100%",
-        borderRadius: "50%",
-        objectFit: "cover",
-      }}
-    />
-  ) : (
-    <span aria-hidden="true">👤</span>
-  );
+  const displayName = profile?.name || userName || "Minha conta";
+  const firstName = displayName.split(" ")[0];
+  const photoUrl = profile ? profile.avatarUrl : toAbsoluteUrl(userPhoto);
+  const showPhoto = Boolean(photoUrl) && !photoFailed;
+
+  let profileContent;
+
+  if (showPhoto) {
+    profileContent = (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={photoUrl as string}
+        alt=""
+        onError={() => setPhotoFailed(true)}
+        style={{
+          width: "100%",
+          height: "100%",
+          borderRadius: "50%",
+          objectFit: "cover",
+        }}
+      />
+    );
+  } else if (profile?.name) {
+    profileContent = (
+      <span
+        aria-hidden="true"
+        style={{ fontSize: "15px", fontWeight: 800, lineHeight: 1 }}
+      >
+        {getInitials(profile.name)}
+      </span>
+    );
+  } else {
+    profileContent = <span aria-hidden="true">👤</span>;
+  }
 
   return (
     <header className="vne-header">
@@ -109,11 +229,26 @@ export default function Header({
             )}
 
             <Link
+<<<<<<< HEAD
               href="/profile"
               className="vne-header__mobile-login"
+=======
+              href="/dashboard/profile"
+              className="vne-header__mobile-user"
+>>>>>>> 7cdc912 (feat: improve resume comparison experience)
               onClick={closeMenu}
             >
-              Meu perfil
+              <span className="vne-header__avatar" aria-hidden="true">
+                {showPhoto ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={photoUrl as string} alt="" />
+                ) : profile?.name ? (
+                  getInitials(profile.name)
+                ) : (
+                  "👤"
+                )}
+              </span>
+              <span>{profile ? displayName : "Meu perfil"}</span>
             </Link>
           </div>
         </nav>
@@ -130,11 +265,16 @@ export default function Header({
           <Link
             href="/profile"
             className="profile-icon"
-            aria-label={`Abrir perfil de ${userName}`}
-            title={userName}
+            aria-label={`Abrir perfil de ${displayName}`}
+            title={profile?.email ? `${displayName} — ${profile.email}` : displayName}
+            style={showPhoto ? { overflow: "hidden", padding: 0 } : undefined}
           >
             {profileContent}
           </Link>
+
+          {profile && (
+            <span className="vne-header__user-name">{firstName}</span>
+          )}
         </div>
 
         <button

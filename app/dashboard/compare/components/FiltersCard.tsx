@@ -1,120 +1,164 @@
 "use client";
 
-import { useState } from "react";
-import Card from "@/app/components/ui/Card";
+import type { ReactNode } from "react";
+import type { JobFilters } from "../data/types";
+import {
+  CONTRACT_LABEL,
+  SENIORITY_LABEL,
+  WORK_MODE_LABEL,
+  capitalize,
+} from "../data/jobLabels";
+import {
+  cardClass,
+  fieldClass,
+  labelClass,
+  secondaryButtonClass,
+  sectionTitleClass,
+} from "../data/styles";
 
-export function FiltersCard() {
-  const [search, setSearch] = useState("");
-  const [area, setArea] = useState("todas");
+interface Props {
+  filters: JobFilters;
+  areas: string[];
+  onChange: (patch: Partial<JobFilters>) => void;
+  onClear: () => void;
+}
 
+function Field({
+  id,
+  label,
+  wide,
+  children,
+}: {
+  id: string;
+  label: string;
+  wide?: boolean;
+  children: ReactNode;
+}) {
   return (
-    <Card className="cmp-card">
-      <div className="vn-card-heading">
-        <div className="vn-card-icon vn-card-icon--round" aria-hidden="true">🔎</div>
-        <h2 className="vn-card-title">Filtrar vagas</h2>
-      </div>
+    <div className={wide ? "cmp-field--wide" : undefined}>
+      <label htmlFor={id} className={labelClass}>
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
+
+const toOptions = (labels: Record<string, string>) =>
+  Object.entries(labels).map(([value, label]) => (
+    <option key={value} value={value}>
+      {label}
+    </option>
+  ));
+
+export function FiltersCard({ filters, areas, onChange, onClear }: Props) {
+  return (
+    <section className={`${cardClass} cmp-card`}>
+      <h2 className={`${sectionTitleClass} vn-card-heading`}>Filtros</h2>
 
       <div className="cmp-filters">
-        <div className="cmp-field--wide">
-          <label htmlFor="cargo" className="vn-label">
-            Buscar por cargo ou palavra-chave
-          </label>
-
+        <Field id="f-q" label="Cargo ou palavra-chave" wide>
           <input
-            type="text"
-            id="cargo"
-            className="vn-input"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Ex.: Vendedor, Enfermeiro, Desenvolvedor..."
+            id="f-q"
+            type="search"
+            className={fieldClass}
+            placeholder="Ex.: React, back-end, dados..."
+            value={filters.q}
+            onChange={(e) => onChange({ q: e.target.value })}
           />
-        </div>
+        </Field>
 
-        <div>
-          <label htmlFor="area" className="vn-label">Área profissional</label>
-
+        <Field id="f-area" label="Área profissional">
           <select
-            id="area"
-            className="vn-input"
-            value={area}
-            onChange={(event) => setArea(event.target.value)}
+            id="f-area"
+            className={fieldClass}
+            value={filters.area}
+            onChange={(e) => onChange({ area: e.target.value })}
           >
-            <option value="todas">Todas as áreas</option>
-            <option value="administrativo">Administrativo</option>
-            <option value="comercial">Comercial e Vendas</option>
-            <option value="educacao">Educação</option>
-            <option value="engenharia">Engenharia</option>
-            <option value="saude">Saúde</option>
-            <option value="tecnologia">Tecnologia</option>
+            <option value="">Todas</option>
+            {areas.map((area) => (
+              <option key={area} value={area}>
+                {capitalize(area)}
+              </option>
+            ))}
           </select>
-        </div>
+        </Field>
 
-        <div>
-          <label htmlFor="localizacao" className="vn-label">Localização</label>
-
+        <Field id="f-location" label="Localização">
           <input
+            id="f-location"
             type="text"
-            id="localizacao"
-            className="vn-input"
+            className={fieldClass}
             placeholder="Cidade ou estado"
+            value={filters.location}
+            onChange={(e) => onChange({ location: e.target.value })}
           />
-        </div>
+        </Field>
 
-        <div>
-          <label htmlFor="modalidade" className="vn-label">Modalidade</label>
-
-          <select id="modalidade" className="vn-input" defaultValue="todas">
-            <option value="todas">Todas</option>
-            <option value="remoto">Remoto</option>
-            <option value="hibrido">Híbrido</option>
-            <option value="presencial">Presencial</option>
+        <Field id="f-mode" label="Modalidade">
+          <select
+            id="f-mode"
+            className={fieldClass}
+            value={filters.mode}
+            onChange={(e) =>
+              onChange({ mode: e.target.value as JobFilters["mode"] })
+            }
+          >
+            <option value="">Todas</option>
+            {toOptions(WORK_MODE_LABEL)}
           </select>
-        </div>
+        </Field>
 
-        <div>
-          <label htmlFor="nivel" className="vn-label">Nível profissional</label>
-
-          <select id="nivel" className="vn-input" defaultValue="todos">
-            <option value="todos">Todos</option>
-            <option value="estagio">Estágio</option>
-            <option value="assistente">Assistente</option>
-            <option value="junior">Júnior</option>
-            <option value="pleno">Pleno</option>
-            <option value="senior">Sênior</option>
-            <option value="gestao">Coordenação/Gerência</option>
+        <Field id="f-seniority" label="Nível">
+          <select
+            id="f-seniority"
+            className={fieldClass}
+            value={filters.seniority}
+            onChange={(e) =>
+              onChange({ seniority: e.target.value as JobFilters["seniority"] })
+            }
+          >
+            <option value="">Todos</option>
+            {toOptions(SENIORITY_LABEL)}
           </select>
-        </div>
+        </Field>
 
-        <div>
-          <label htmlFor="contrato" className="vn-label">Tipo de contrato</label>
-
-          <select id="contrato" className="vn-input" defaultValue="todos">
-            <option value="todos">Todos</option>
-            <option value="clt">CLT</option>
-            <option value="pj">PJ</option>
-            <option value="estagio">Estágio</option>
-            <option value="temporario">Temporário</option>
-            <option value="freelancer">Freelancer</option>
+        <Field id="f-contract" label="Tipo de contrato">
+          <select
+            id="f-contract"
+            className={fieldClass}
+            value={filters.contract}
+            onChange={(e) =>
+              onChange({ contract: e.target.value as JobFilters["contract"] })
+            }
+          >
+            <option value="">Todos</option>
+            {toOptions(CONTRACT_LABEL)}
           </select>
-        </div>
+        </Field>
 
-        <div>
-          <label htmlFor="ordenacao" className="vn-label">Ordenar por</label>
-
-          <select id="ordenacao" className="vn-input" defaultValue="compativeis">
-            <option value="compativeis">Mais compatíveis</option>
+        <Field id="f-sort" label="Ordenar por">
+          <select
+            id="f-sort"
+            className={fieldClass}
+            value={filters.sort}
+            onChange={(e) =>
+              onChange({ sort: e.target.value as JobFilters["sort"] })
+            }
+          >
+            <option value="match">Mais compatíveis</option>
             <option value="recentes">Mais recentes</option>
-            <option value="salario">Maior salário</option>
           </select>
-        </div>
+        </Field>
 
         <button
           type="button"
-          className="vn-button vn-button--outline cmp-filters__clear"
+          className={`${secondaryButtonClass} cmp-filters__clear`}
+          onClick={onClear}
         >
           Limpar filtros
         </button>
       </div>
-    </Card>
+    </section>
   );
 }

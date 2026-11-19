@@ -1,0 +1,25 @@
+Both subtasks use the same small set of lessons from your TypeScript course. Most of them are in Sections 3–7, which you’ve already finished. The new material is Section 9 (Modules), which you haven’t started, plus three short lessons from the ES6 appendix. That’s about 35 minutes of new video.
+
+Watch these first, for both functions (new)
+
+Your lib/ functions will import the Job and Resume types from data/, so you need modules before you write either one.
+
+Section 9, lessons 118–126 (Modules, 21 min). The key ones are 120 Importação de arquivos and 125 Importando tipos.
+231 Método filter, 232 Método map and 234 Destructuring (ES6 appendix, about 14 min). These array methods are the core of both functions.
+
+Subtask 1: match function (resume vs job → score, matched and missing skills)
+
+34 Tipo de parâmetro, 35 Tipo de retorno: the function takes a Resume and a Job and returns a result object.
+42 Type alias, 43 Interfaces, 44 Type alias x Interface: for defining a MatchResult type with score, matched and missing.
+74 Interface como parâmetro: passing your Resume and Job into the function.
+55 Checando se valor existe: guards the case where a job has no skills listed, so you don’t divide by zero when you calculate the score.
+
+Subtask 2: filter function (jobs by active filters)
+
+38 Propriedades opcionais, 39 Validação de parâmetro opcional, 75 Interface com parâmetro opcional: every filter can be empty, so each field in your Filters type should be optional.
+40–41 Union types, 45 Literal types: for fixed options like "remoto" | "presencial" | "hibrido" or "junior" | "pleno" | "senior".
+53–55 Narrowing: the “if this filter is set, apply it” logic.
+
+Skip for now: Section 8 (Classes), Section 10 (Decorators) and Section 11 (React). Plain functions don’t need classes, and React only matters once you get to the components. This matches your “Today’s Study Plan”, which lists interfaces, modules and object typing and says to skip React components today.
+
+You won’t find lessons on .includes(), .some() or Set in this course. You’ll use them for comparing skills (resume.skills.includes(skill)), and a quick search on MDN covers them in a few minutes.

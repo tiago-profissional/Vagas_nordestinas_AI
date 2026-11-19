@@ -543,26 +543,76 @@
   }
 }
 
+/* Primeiro nome ao lado da foto */
+
 .vne-header__user-name {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   font-size: var(--fonte-sm);
   font-weight: 700;
   color: var(--cor-titulo);
   white-space: nowrap;
 }
 
-.vne-header__mobile-user {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  gap: var(--espaco-3);
-  font-weight: 700;
-  color: var(--cor-titulo);
-}
-
 @media (max-width: 800px) {
   .vne-header__user-name {
     display: none;
   }
+}
+
+/* Foto (ou iniciais) do usuário no menu do celular */
+
+.vne-header__avatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  color: #8b4a16;
+  background: #f9e3cf;
+  border-radius: 50%;
+
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.vne-header__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vne-header__mobile-user {
+  grid-column: 1 / -1;
+
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+
+  padding: var(--espaco-2) var(--espaco-3);
+
+  color: var(--cor-titulo);
+  background: var(--cor-superficie-suave);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-campo);
+
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.vne-header__mobile-user span:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .vne-header__icon-btn,
