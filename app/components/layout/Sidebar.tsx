@@ -12,7 +12,10 @@ import {
   UserRound,
 } from "lucide-react";
 
-import { PORTAL_URL } from "@/app/lib/portal";
+import {
+  clearSharedSessionCookie,
+  PORTAL_URL,
+} from "@/app/lib/portal";
 
 const menuItems = [
   {
@@ -48,15 +51,6 @@ const menuItems = [
     icon: LogOut,
   },
 ];
-
-function clearSessionToken() {
-  const cookie = "vn_token=; Path=/; Max-Age=0; SameSite=Lax";
-  document.cookie = cookie;
-
-  if (process.env.NODE_ENV === "production") {
-    document.cookie = `${cookie}; Domain=.vagasnordestinas.com`;
-  }
-}
 
 // "/dashboard" só fica ativo na rota exata; os demais também nas sub-rotas.
 function isRouteActive(pathname: string, href: string) {
@@ -100,7 +94,9 @@ export function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={className}
-                onClick={item.label === "Sair" ? clearSessionToken : undefined}
+                onClick={
+                  item.label === "Sair" ? clearSharedSessionCookie : undefined
+                }
               >
                 {content}
               </a>
