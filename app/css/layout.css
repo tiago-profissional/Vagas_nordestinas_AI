@@ -69,4 +69,17 @@
     min-width: 0;
     overflow-wrap: anywhere;
   }
+
+  .vn-nav-item__status {
+    flex-shrink: 0;
+    margin-left: auto;
+    padding: 2px 7px;
+    border-radius: var(--raio-pill);
+    color: var(--cor-primaria-texto);
+    background: var(--cor-destaque-10);
+    font-size: 0.65rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
 }

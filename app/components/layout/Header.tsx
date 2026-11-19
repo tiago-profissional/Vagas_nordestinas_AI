@@ -6,8 +6,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import "@/app/css/header.css";
+import { PORTAL_URL } from "@/app/lib/portal";
 
-const SITE_URL = "https://vagasnordestinas.free.je";
+const SITE_URL = PORTAL_URL;
 
 // Mesmo backend e mesmo banco de dados do site principal.
 const API_URL = (
@@ -46,7 +47,12 @@ function readSessionToken(): string | null {
 }
 
 function clearSessionToken() {
-  document.cookie = `${SESSION_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax`;
+  const cookie = `${SESSION_COOKIE}=; Path=/; Max-Age=0; SameSite=Lax`;
+  document.cookie = cookie;
+
+  if (process.env.NODE_ENV === "production") {
+    document.cookie = `${cookie}; Domain=.vagasnordestinas.com`;
+  }
 }
 
 function toAbsoluteUrl(url: string | null | undefined): string | null {
@@ -229,13 +235,8 @@ export default function Header({
             )}
 
             <Link
-<<<<<<< HEAD
               href="/profile"
               className="vne-header__mobile-login"
-=======
-              href="/dashboard/profile"
-              className="vne-header__mobile-user"
->>>>>>> 7cdc912 (feat: improve resume comparison experience)
               onClick={closeMenu}
             >
               <span className="vne-header__avatar" aria-hidden="true">

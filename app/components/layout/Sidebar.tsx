@@ -12,6 +12,8 @@ import {
   UserRound,
 } from "lucide-react";
 
+import { PORTAL_URL } from "@/app/lib/portal";
+
 const menuItems = [
   {
     label: "Meu Currículo",
@@ -22,28 +24,39 @@ const menuItems = [
     label: "Comparar com vaga",
     href: "/dashboard/compare",
     icon: GitCompareArrows,
+    status: "Em desenvolvimento",
   },
   {
     label: "Minhas Vagas",
-    href: "https://vagasnordestinas.free.je/dashboard",
+    href: `${PORTAL_URL}/dashboard`,
     icon: BriefcaseBusiness,
+    status: "Em produção",
   },
   {
     label: "Criar Nova Vaga",
-    href: "https://vagasnordestinas.free.je/create-job",
+    href: `${PORTAL_URL}/create-job`,
     icon: Plus,
   },
   {
     label: "Perfil",
-    href: "/profile",
+    href: `${PORTAL_URL}/profile`,
     icon: UserRound,
   },
   {
     label: "Sair",
-    href: "https://vagasnordestinas.free.je/",
+    href: `${PORTAL_URL}/`,
     icon: LogOut,
   },
 ];
+
+function clearSessionToken() {
+  const cookie = "vn_token=; Path=/; Max-Age=0; SameSite=Lax";
+  document.cookie = cookie;
+
+  if (process.env.NODE_ENV === "production") {
+    document.cookie = `${cookie}; Domain=.vagasnordestinas.com`;
+  }
+}
 
 // "/dashboard" só fica ativo na rota exata; os demais também nas sub-rotas.
 function isRouteActive(pathname: string, href: string) {
@@ -75,12 +88,20 @@ export function Sidebar() {
               />
 
               <span className="vn-nav-item__label">{item.label}</span>
+              {"status" in item && item.status && (
+                <span className="vn-nav-item__status">{item.status}</span>
+              )}
             </>
           );
 
           if (isExternal) {
             return (
-              <a key={item.href} href={item.href} className={className}>
+              <a
+                key={item.href}
+                href={item.href}
+                className={className}
+                onClick={item.label === "Sair" ? clearSessionToken : undefined}
+              >
                 {content}
               </a>
             );
