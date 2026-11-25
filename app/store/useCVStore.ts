@@ -51,11 +51,22 @@ export const useCVStore = create<CVStore>((set) => ({
       if (!res.ok) {
         const errorData =
           typeof data === "object" && data !== null
-            ? data as { detalhe?: unknown; message?: unknown }
+            ? data as {
+                error?: unknown
+                details?: unknown
+                detalhe?: unknown
+                message?: unknown
+              }
             : {}
         throw new Error(
-          (typeof errorData.detalhe === "string" && errorData.detalhe) ||
-            (typeof errorData.message === "string" && errorData.message) ||
+          [
+            typeof errorData.error === "string" ? errorData.error : null,
+            typeof errorData.details === "string" ? errorData.details : null,
+            typeof errorData.detalhe === "string" ? errorData.detalhe : null,
+            typeof errorData.message === "string" ? errorData.message : null,
+          ]
+            .filter(Boolean)
+            .join(" ") ||
             `Falha no envio (${res.status}).`,
         )
       }

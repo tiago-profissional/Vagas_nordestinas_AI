@@ -102,7 +102,7 @@ export async function POST(request: Request) {
 
     if (!(file instanceof File)) {
       return NextResponse.json(
-        { message: "erro", detalhe: "Nenhum arquivo enviado." },
+        { error: "Nenhum arquivo enviado.", details: "Campo file ausente." },
         { status: 400 },
       );
     }
@@ -110,7 +110,10 @@ export async function POST(request: Request) {
     const extension = file.name.split(".").pop()?.toLowerCase();
     if (extension !== "pdf" && extension !== "docx") {
       return NextResponse.json(
-        { message: "erro", detalhe: "Formato inválido. Envie PDF ou DOCX." },
+        {
+          error: "Formato inválido.",
+          details: "Envie um arquivo PDF ou DOCX.",
+        },
         { status: 400 },
       );
     }
@@ -118,11 +121,11 @@ export async function POST(request: Request) {
     if (file.size === 0 || file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
         {
-          message: "erro",
-          detalhe:
+          error:
             file.size === 0
               ? "O arquivo enviado está vazio."
               : "O arquivo deve ter no máximo 5 MB.",
+          details: `Tamanho recebido: ${file.size} bytes.`,
         },
         { status: 413 },
       );
@@ -188,9 +191,8 @@ ${resumeText}`);
     console.error(`Falha na etapa "${stage}" da rota /api/upload-cv:`, error);
     return NextResponse.json(
       {
-        message: "Não foi possível processar o currículo.",
-        etapa: stage,
-        detalhe: detail,
+        error: `Falha ao processar o currículo na etapa "${stage}".`,
+        details: detail,
       },
       { status: 500 },
     );
