@@ -1,5 +1,4 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { PDFParse } from "pdf-parse";
 import mammoth from "mammoth";
 import { NextResponse } from "next/server";
 
@@ -131,23 +130,20 @@ export async function POST(request: Request) {
       );
     }
 
-    stage = "extração de texto";
+    stage = "preparação do arquivo";
     const bytes = Buffer.from(await file.arrayBuffer());
-    let resumeText: string;
+    let resumeText: string | null = null;
+    let pdfBase64: string | null = null;
 
     if (extension === "pdf") {
-      const parser = new PDFParse({ data: bytes });
-      try {
-        resumeText = (await parser.getText()).text;
-      } finally {
-        await parser.destroy();
-      }
+      pdfBase64 = Buffer.from(bytes).toString("base64");
     } else {
-      resumeText = (await mammoth.extractRawText({ buffer: bytes })).value;
-    }
-
-    if (!resumeText.trim()) {
-      throw new Error("Não foi encontrado texto extraível no currículo.");
+      resumeText = (
+        await mammoth.extractRawText({ buffer: Buffer.from(bytes) })
+      ).value;
+      if (!resumeText.trim()) {
+        throw new Error("Não foi encontrado texto extraível no currículo.");
+      }
     }
 
     stage = "configuração do Gemini";
@@ -161,7 +157,7 @@ export async function POST(request: Request) {
       model: "gemini-2.5-flash",
       generationConfig: { responseMimeType: "application/json" },
     });
-    const result = await model.generateContent(`Analise o currículo abaixo e retorne somente um objeto JSON válido, sem markdown ou texto adicional, com exatamente esta estrutura:
+    const prompt = `Analise o currículo anexado ou o texto abaixo e retorne somente um objeto JSON válido, sem markdown ou texto adicional, com exatamente esta estrutura:
 {
   "name": "Nome completo ou Não informado",
   "email": "Email ou Não informado",
@@ -179,8 +175,19 @@ export async function POST(request: Request) {
 }
 Use de 3 a 4 sugestões em aiAnalysis, cada status deve ser "success" ou "warning", e score deve ser um número entre 0 e 100. Não invente informações ausentes.
 
-Currículo:
-${resumeText}`);
+${resumeText ? `Currículo:\n${resumeText}` : "O currículo está anexado como PDF."}`;
+    const content = pdfBase64
+      ? [
+          { text: prompt },
+          {
+            inlineData: {
+              data: pdfBase64,
+              mimeType: "application/pdf",
+            },
+          },
+        ]
+      : prompt;
+    const result = await model.generateContent(content);
 
     stage = "interpretação da resposta do Gemini";
     const cvData = parseCVData(JSON.parse(result.response.text()));
