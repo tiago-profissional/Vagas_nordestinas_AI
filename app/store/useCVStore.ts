@@ -38,21 +38,43 @@ export const useCVStore = create<CVStore>((set) => ({
   uploadCV: async (file: File) => {
     set({ isLoading: true, error: null })
 
-    const formData = new FormData()
-    formData.append("file", file)
+    try {
+      const formData = new FormData()
+      formData.append("file", file)
 
-    const res = await fetch("/api/upload-cv", {
-      method: "POST",
-      body: formData,
-    })
+      const res = await fetch("/api/upload-cv", {
+        method: "POST",
+        body: formData,
+      })
+      const data: unknown = await res.json()
 
-    const data = await res.json()
+      if (!res.ok) {
+        const errorData =
+          typeof data === "object" && data !== null
+            ? data as { detalhe?: unknown; message?: unknown }
+            : {}
+        throw new Error(
+          (typeof errorData.detalhe === "string" && errorData.detalhe) ||
+            (typeof errorData.message === "string" && errorData.message) ||
+            `Falha no envio (${res.status}).`,
+        )
+      }
 
-    set({
-      hasCV: true,
-      isLoading: false,
-      cvData: data.cvData,
-    })
+      if (typeof data !== "object" || data === null || !("name" in data)) {
+        throw new Error("A resposta do servidor não contém a análise do currículo.")
+      }
+
+      set({
+        hasCV: true,
+        isLoading: false,
+        cvData: data as CVData,
+      })
+    } catch (error) {
+      set({
+        isLoading: false,
+        error: error instanceof Error ? error.message : String(error),
+      })
+    }
   },
 
   clearCV: () => set({ hasCV: false, cvData: null, error: null })

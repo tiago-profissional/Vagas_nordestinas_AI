@@ -17,6 +17,7 @@ export function UploadZone() {
   const dragCounter = useRef(0);
 
   const uploadCV = useCVStore((state) => state.uploadCV);
+  const uploadError = useCVStore((state) => state.error);
 
   function selectFile(chosen: File | null) {
     if (!chosen) return;
@@ -132,6 +133,12 @@ export function UploadZone() {
       {error && (
         <p role="alert" className="vn-field-error">
           {error}
+        </p>
+      )}
+
+      {uploadError && (
+        <p role="alert" className="vn-field-error">
+          {uploadError}
         </p>
       )}
 
